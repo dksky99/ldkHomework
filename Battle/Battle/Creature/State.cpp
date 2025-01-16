@@ -144,6 +144,7 @@ bool State::IsActable()
 
 Targeting* State::GetTarget()
 {
+	//어그로의 경우 마지막에 걸린 어그로가 유효. 
 	if (myState & EStateAbnormality::Aggro)
 	{
 		auto temp = Aggros.end();
