@@ -6,7 +6,7 @@ public:
 	static void Create();
 
 public:
-	void Update(class Creature* team1[],int team1Size, class Creature* team2[], int team2Size);
+	void Update(vector<Creature*>& team1, vector<Creature*>& team2);
 
 
 private:
@@ -18,4 +18,4 @@ private:
 
 
 };
-
+BattleManager* BattleManager::_instance = nullptr;

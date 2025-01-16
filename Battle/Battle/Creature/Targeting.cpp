@@ -1,5 +1,13 @@
+
+#include "pch.h"
+#include "Creature.h"
 #include "Targeting.h"
 
+Creature* Targeting::operator()(Creature& owner, vector<Creature*> enemys, vector<Creature*> friendlys)
+{
+	return nullptr;
+
+}
 
 Creature* RandomTargeting::operator()(Creature& owner, vector<Creature*> enemys, vector<Creature*> friendlys)
 {
@@ -18,15 +26,15 @@ Creature* RandomTargeting::operator()(Creature& owner, vector<Creature*> enemys,
 		return nullptr;
 
 	int n = rand() % result.size();
-	auto iter = result.begin();
+	auto iter2 = result.begin();
 	for (int i = 0;i < n;i++)
 	{
 
-		iter++;
+		iter2++;
 	}
 
 
-	return *iter;
+	return *iter2;
 }
  Creature* RevengeTargeting::operator()(Creature& owner, vector<Creature*> enemys, vector<Creature*> friendlys)
 {
@@ -130,3 +138,9 @@ Creature* AggroTargeting::operator()(Creature& owner, vector<Creature*> enemys, 
 
 
  }
+
+AggroTargeting::~AggroTargeting()
+{
+	if (target != nullptr)
+		target = nullptr;
+}

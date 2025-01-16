@@ -1,32 +1,8 @@
 #pragma once
-#include<vector>
-#include<unordered_map>
-#include "Targeting.h"
+#include "pch.h"
 
 
-class StateAbnormality_Aggro
-{
-public:
-	void SetTarget(class Creature* target,int duration)
-	{
-		_duration = duration;
-		_targeting = new AggroTargeting();
-		_targeting->target = target;
-	}
-	Targeting* GetTargeting() 
-	{ 
-		return _targeting;
-	
-	}
-	
 
-private:
-
-	int _duration;
-	AggroTargeting* _targeting;
-
-
-};
 
 
 
@@ -38,7 +14,6 @@ public:
 	virtual void Act(vector<Creature*>& enemys, vector<Creature*>& friendlys) abstract;
 
 	bool Update();
-	Creature* TargetChoice(vector<Creature*>& enemys, vector<Creature*>& friendlys, function<Creature* (Creature* owner,vector<Creature*>, vector<Creature*>)>);
 	void Attack(class Creature& victim,int dmg);
 	void Damaged(Creature& attacker, int atk);
 	bool IsAlive();
@@ -68,7 +43,6 @@ protected:
 	const int _defaultActionGuage=100;
 	int _actionGuage;
 
-	unsigned char _state;
 
 	int _teamNum;
 	unordered_map<Creature*, int> hitLog;

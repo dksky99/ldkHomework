@@ -1,7 +1,7 @@
 #include "pch.h"
-#include "Goblin.h"
 #include "Creature.h"
 #include "Targeting.h"
+#include "Goblin.h"
 
 Goblin::Goblin(string name, int hp, int atk, int arm, int speed):Monster(name, hp, atk, arm, speed)
 {
@@ -15,7 +15,7 @@ void Goblin::Act(vector<Creature*>& enemys, vector<Creature*>& friendlys)
 	{
 		return;
 	}
-	Bite(enemys);
+	Bite(enemys,friendlys);
 
 }
 
@@ -28,8 +28,9 @@ void Goblin::Bite(vector<Creature*>& enemys, vector<Creature*>& friendlys)
 
 	int damage = this->_atk;
 
-	if ((*defaultTarget)(*this,enemys, friendlys))
-		enemys[n]->Damaged(*this,damage);
+	Creature* target = (*defaultTarget)(*this, enemys, friendlys);
+	if (target)
+		target->Damaged(*this, damage);
 
 	delete defaultTarget;
 }

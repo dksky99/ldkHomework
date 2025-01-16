@@ -1,5 +1,8 @@
 #include "pch.h"
+#include "Targeting.h"
+
 #include "Creature.h"
+
 
 Creature::Creature(string name, int hp, int atk, int arm, int speed,int teamNum):_name(name),_hp(hp),_atk(atk),_arm(arm), _speed(speed),_actionGuage(100),_teamNum(teamNum)
 {
@@ -20,14 +23,6 @@ bool Creature::Update()
 	return false;
 }
 
-Creature* Creature::TargetChoice(vector<Creature*>& enemys, vector<Creature*>& friendlys,function<Creature*(vector<Creature*>,vector<Creature*>)> )
-{
-
-
-
-
-	return nullptr;
-}
 
 void Creature::Attack(Creature& victim, int dmg)
 {

@@ -26,4 +26,4 @@
 #include <functional>
 using namespace std;
 
-bool CheckEnemysAlive(vector<Creature*>& enemys);
+bool CheckEnemysAlive(vector<class Creature*>& enemys);

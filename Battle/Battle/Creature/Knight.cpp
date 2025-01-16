@@ -1,4 +1,5 @@
 #include "pch.h"
+#include "Targeting.h"
 #include "Knight.h"
 
 Knight::Knight(string name, int hp, int atk, int arm, int speed) :Player(name, hp, atk, arm, speed)
@@ -6,7 +7,7 @@ Knight::Knight(string name, int hp, int atk, int arm, int speed) :Player(name, h
 	cout << "기사 생성" << endl;
 }
 
-void Knight::Act(Creature* enemys[], int enemyCount, Creature* friendlys[], int friendCount)
+void Knight::Act(vector<Creature*>& enemys, vector<Creature*>& friendlys)
 {
 	if (!IsAlive())
 	{
@@ -17,72 +18,104 @@ void Knight::Act(Creature* enemys[], int enemyCount, Creature* friendlys[], int 
 	{
 	case 0:
 	case 1:
-		MoonSlash(enemys, enemyCount);
+		MoonSlash(enemys, friendlys);
 		break;
 	case 2:
 	case 3:
 	case 4:
 	default:
-		Smite(enemys, enemyCount);
+		Smite(enemys, friendlys);
 		break;
 
 	}
 }
 
-void Knight::Smite(Creature* enemys[], int enemyCount)
+void Knight::Smite(vector<Creature*>& enemys, vector<Creature*>& friendlys)
 {
 	cout << this->_name << "가 Smite 시전" << endl;
+
 	int n = 0;
-	do
-	{
-		n = rand() % enemyCount;
-	} while (!Targeting(enemys[n]) && CheckEnemysAlive((Creature**)enemys, enemyCount));
+	Targeting* defaultTarget = new RandomTargeting();
+
+
 	
 	int damage = this->_atk * 4;
 
-	if (Targeting(enemys[n]))
-		enemys[n]->Damaged(damage);
+	Creature* target = (*defaultTarget)(*this, enemys, friendlys);
+	if (target)
+		target->Damaged(*this, damage);
+
+	delete defaultTarget;
+
+
+	
 }
 
-void Knight::MoonSlash(Creature* enemys[], int enemyCount)
+//질문사항 : iter을 사용한 반복문은 보통 begin에서 end로 순차적으로 실행 begin은 0번 인덱스를 가리키지만 end는 마지막인덱스너머를 가리키고있음
+// 그러면 역순으로 탐색하려면 어떻게해야할까요
+
+
+void Knight::MoonSlash(vector<Creature*>& enemys, vector<Creature*>& friendlys)
 {
 	cout << this->_name<<"가 MoonSlash 시전" << endl;
+
 	int n = 0;
-	do
-	{
-		n = rand() % enemyCount;
-	} while (!Targeting(enemys[n]) && CheckEnemysAlive((Creature**)enemys, enemyCount));
-	
+	Targeting* defaultTarget = new RandomTargeting();
+
+
 
 	int damage = this->_atk * 6;
-	if (Targeting(enemys[n]))
-		enemys[n]->Damaged(damage);
-	int i = n;
-	do
+
+	Creature* target = (*defaultTarget)(*this, enemys, friendlys);
+	if (target)
+		target->Damaged(*this, damage);
+	auto targetIter=find(enemys.begin(), enemys.end(), target);
+	auto anotherTarget =enemys.end();
+	for (auto iter=targetIter;iter != enemys.begin();iter--)
 	{
-		i -= 1;
-		if (i < 0)
+
+		if (targetIter == iter)
+			continue;
+
+		if ((*iter)->IsAlive())
+		{
+			anotherTarget = iter;
 			break;
-	} while (!Targeting(enemys[i]) && CheckEnemysAlive((Creature**)enemys, enemyCount));
-	if (i >= 0)
-	{
-		damage = this->_atk * 3;
-		if (Targeting(enemys[i]))
-			enemys[i]->Damaged(damage);
+		}
 
 	}
-	i = n;
-	do
+	if (anotherTarget != enemys.end())
 	{
-		i += 1;
-		if (i >= enemyCount)
-			break;
-	} while (!Targeting(enemys[i]) && CheckEnemysAlive((Creature**)enemys, enemyCount));
-	if (i <enemyCount)
-	{
+		target = *anotherTarget;
+
 		damage = this->_atk * 3;
-		if (Targeting(enemys[i]))
-			enemys[i]->Damaged(damage);
+		if (target)
+			target->Damaged(*this, damage);
+	}
+
+	anotherTarget = enemys.end();
+	for (auto iter = targetIter;iter != enemys.end();iter++)
+	{
+		if (targetIter == iter)
+			continue;
+
+		if ((*iter)->IsAlive())
+		{
+			anotherTarget = iter;
+			break;
+		}
 
 	}
+	if (anotherTarget != enemys.end())
+	{
+		target = *anotherTarget;
+
+		damage = this->_atk * 3;
+		if (target)
+			target->Damaged(*this, damage);
+	}
+	
+
+	delete defaultTarget;
+	
 }

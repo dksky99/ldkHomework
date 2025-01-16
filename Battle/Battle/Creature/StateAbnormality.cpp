@@ -1,4 +1,6 @@
 #include "pch.h"
+#include "Creature/Creature.h"
+#include "Targeting.h"
 #include "StateAbnormality.h"
 
 StateAbnormality_Aggro::~StateAbnormality_Aggro()

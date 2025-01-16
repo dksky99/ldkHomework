@@ -1,11 +1,13 @@
 #pragma once
-#include "Targeting.h"
-
 enum EStateAbnormality
 {
+	//지속피해
 	Dot = 1,
+	//행동불능
 	Inability = 1 << 1,
+	//타겟 강제지정
 	Aggro = 1 << 2,
+	//타겟 랜덤
 	Disarray = 1 << 3
 
 };
@@ -14,10 +16,12 @@ enum EStateAbnormality
 class StateAbnormality
 {
 public:
-	virtual ~StateAbnormality()=0;
+	virtual ~StateAbnormality() {};
 	void TurnDown() { _duration--; }
 	bool GetPurifiable() { return _purifiable; }
+	bool IsFinished() { return _duration==0; }
 	void Purify() {}
+	EStateAbnormality GetType() { return _state; }
 
 protected:
 
@@ -33,19 +37,19 @@ protected:
 class StateAbnormality_Aggro : public StateAbnormality
 {
 public:
-	virtual ~StateAbnormality_Aggro()override;
+	virtual ~StateAbnormality_Aggro()override ;
 	void SetTarget(class Creature* target, int duration)
 	{
 		_duration = duration;
-		_targeting = new AggroTargeting();
+		_targeting = new class AggroTargeting();
 		_targeting->target = target;
 	}
-	Targeting* GetTargeting(){return _targeting;}
+	class Targeting* GetTargeting(){return _targeting;}
 
 
 private:
 
-	AggroTargeting* _targeting;
+	class AggroTargeting* _targeting;
 
 
 };

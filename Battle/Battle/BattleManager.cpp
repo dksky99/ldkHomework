@@ -15,15 +15,15 @@ void BattleManager::Create()
 {
     if (_instance)
         return;
-    new BattleManager();
+    _instance= new BattleManager();
 }
 
-void BattleManager::Update(Creature* team1[], int team1Size, Creature* team2[], int team2Size)
+void BattleManager::Update(vector<Creature*>& team1, vector<Creature*>& team2)
 {
-    for (int i = 0;i < team1Size;i++)
-    {
-        team1[i]
-    }
+    //for (int i = 0;i < team1Size;i++)
+    //{
+    //    
+    //}
 }
 
 
