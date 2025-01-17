@@ -60,6 +60,9 @@
     <ClCompile Include="Creature\State.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="Creature\KingGoblin.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -96,6 +99,9 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Creature\State.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Creature\KingGoblin.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

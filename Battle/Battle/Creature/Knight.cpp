@@ -62,57 +62,61 @@ void Knight::MoonSlash(vector<Creature*>& enemys, vector<Creature*>& friendlys)
 	int n = 0;
 	Targeting* defaultTarget = new RandomTargeting();
 
-
+	
 
 	int damage = this->_atk * 6;
 
 	Creature* target = (*defaultTarget)(*this, enemys, friendlys);
+	Creature* anotherTarget = nullptr;
 	if (target)
 		target->Damaged(*this, damage);
-	auto targetIter=find(enemys.begin(), enemys.end(), target);
-	auto anotherTarget =enemys.end();
-	for (auto iter=targetIter;iter != enemys.begin();iter--)
+	int targetIndex = 0;
+	for (int i = 0;i < enemys.size();i++)
+	{
+		if (enemys[i] == target)
+		{
+			targetIndex = i;
+			break;
+		}
+	}
+
+	for (int i=targetIndex-1;i>=0 ;i--)
 	{
 
-		if (targetIter == iter)
-			continue;
 
-		if ((*iter)->IsAlive())
+		if ((enemys[i])->IsAlive())
 		{
-			anotherTarget = iter;
+			anotherTarget = enemys[i];
 			break;
 		}
 
 	}
-	if (anotherTarget != enemys.end())
+	if (anotherTarget != nullptr)
 	{
-		target = *anotherTarget;
 
 		damage = this->_atk * 3;
-		if (target)
-			target->Damaged(*this, damage);
+		if (anotherTarget)
+			anotherTarget->Damaged(*this, damage);
 	}
 
-	anotherTarget = enemys.end();
-	for (auto iter = targetIter;iter != enemys.end();iter++)
+	anotherTarget = nullptr;
+	for (int i = targetIndex + 1;i < enemys.size();i++)
 	{
-		if (targetIter == iter)
-			continue;
 
-		if ((*iter)->IsAlive())
+
+		if ((enemys[i])->IsAlive())
 		{
-			anotherTarget = iter;
+			anotherTarget = enemys[i];
 			break;
 		}
 
 	}
-	if (anotherTarget != enemys.end())
+	if (anotherTarget != nullptr)
 	{
-		target = *anotherTarget;
 
 		damage = this->_atk * 3;
-		if (target)
-			target->Damaged(*this, damage);
+		if (anotherTarget)
+			anotherTarget->Damaged(*this, damage);
 	}
 	
 

@@ -6,16 +6,18 @@ class BattleManager
 public:
 	static BattleManager* GetInstance();
 	static void Create();
-	int TeamAllDead(vector<Creature*>& team);
+	int TeamAllDead(vector<class Creature*>& team);
 	bool CheckBattleFinish(bool t1, bool t2);
 
 public:
-	void Update(vector<Creature*>& team1, vector<Creature*>& team2);
+	void Update(vector<class Creature*>& team1, vector<class Creature*>& team2);
 
 	void CreateTeam();
 	
 	void ClearTeam();
-
+	bool StartBattle();
+	void Battle();
+	void EndBattle();
 private:
 	BattleManager();
 	~BattleManager();
@@ -26,6 +28,6 @@ private:
 	vector<class Creature*> players;
 	vector<class Creature*> monsters;
 
+	bool nowBattle=false;
 
 };
-BattleManager* BattleManager::_instance = nullptr;

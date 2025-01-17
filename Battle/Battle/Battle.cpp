@@ -39,7 +39,7 @@ int main()
 	srand(time(NULL));
 
 	BattleManager::Create();
-	
+	BattleManager::GetInstance()->StartBattle();
 	
 
 	return 0;

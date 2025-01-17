@@ -27,6 +27,7 @@ public:
 
 
 	int GetHp() { return _hp; }
+	const string& GetName() { return _name; }
 
 
 protected:

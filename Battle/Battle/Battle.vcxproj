@@ -159,6 +159,7 @@
     <ClCompile Include="Creature\Mage.cpp" />
     <ClCompile Include="Creature\Targeting.cpp" />
     <ClCompile Include="Creature\Targeting.h" />
+    <ClCompile Include="Creature\KingGoblin.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">pch.h</PrecompiledHeaderFile>
@@ -192,6 +193,7 @@
     <ClInclude Include="Creature\Goblin.h" />
     <ClInclude Include="Creature\Knight.h" />
     <ClInclude Include="Creature\Mage.h" />
+    <ClInclude Include="Creature\KingGoblin.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Creature\State.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>

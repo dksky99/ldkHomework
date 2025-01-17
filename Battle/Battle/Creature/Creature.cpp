@@ -36,7 +36,7 @@ void Creature::Damaged(Creature& attacker, int atk)
 	if (dmg < 1)
 		dmg = 1;
 	_hp -= dmg;
-	HitLogging(&attacker, atk);
+	HitLogging(&attacker, dmg);
 	if (_hp <= 0)
 	{
 		_hp = 0;

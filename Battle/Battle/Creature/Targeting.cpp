@@ -66,6 +66,9 @@ Creature* RandomTargeting::operator()(Creature& owner, vector<Creature*> enemys,
 
 	if (iter2 != enemys.end())
 	{
+		cout << rankList[rank].second << "의 피해를 가한 적" << rankList[rank].first->GetName() <<endl;
+
+
 		return *iter2;
 	}
 
