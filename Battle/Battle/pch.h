@@ -24,6 +24,7 @@
 #include <unordered_map>
 #include <string>
 #include <functional>
+#include <memory>
 using namespace std;
 
 bool CheckEnemysAlive(vector<class Creature*>& enemys);

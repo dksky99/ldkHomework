@@ -6,20 +6,20 @@
 
 
 
-class Creature
+class Creature : public enable_shared_from_this<Creature>
 {
 public:
 	Creature(string name, int hp, int atk,int arm, int speed, int teamNum);
 
-	virtual void Act(vector<Creature*>& enemys, vector<Creature*>& friendlys) abstract;
+	virtual void Act(vector<shared_ptr<Creature>> enemys, vector<shared_ptr<Creature>> friendlys) abstract;
 
 	bool Update();
-	void Attack(class Creature& victim,int dmg);
-	void Damaged(Creature& attacker, int atk);
+	void Attack(shared_ptr<Creature> victim,int dmg);
+	void Damaged(shared_ptr<Creature> attacker, int atk);
 	bool IsAlive();
-	bool TryTargeting(Creature* target);
-	void HitLogging(Creature* attacker,int dmg);
-	const unordered_map<Creature*, int>& GetHitRank();
+	bool TryTargeting(shared_ptr<Creature> target);
+	void HitLogging(shared_ptr<Creature> attacker,int dmg);
+	const unordered_map<weak_ptr<Creature>, int>& GetHitRank();
 
 
 
@@ -46,7 +46,7 @@ protected:
 
 
 	int _teamNum;
-	unordered_map<Creature*, int> hitLog;
+	unordered_map<weak_ptr<Creature>, int> hitLog;
 
 
 

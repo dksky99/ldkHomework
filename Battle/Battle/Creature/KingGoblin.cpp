@@ -16,24 +16,24 @@ void KingGoblin::Act(vector<Creature*>& enemys, vector<Creature*>& friendlys)
 	{
 		return;
 	}
-		Revenge(enemys, friendlys);
-	//int n = rand() % 5;
-	//switch (n)
-	//{
-	//case 0:
-	//case 1:
-	//	Bite(enemys, friendlys);
-	//	break;
-	//case 2:
-	//case 3:
-	//	Smash(enemys, friendlys);
-	//	break;
-	//case 4:
-	//default:
 	//	Revenge(enemys, friendlys);
-	//	break;
-	//
-	//}
+	int n = rand() % 5;
+	switch (n)
+	{
+	case 0:
+	case 1:
+		Bite(enemys, friendlys);
+		break;
+	case 2:
+	case 3:
+		Smash(enemys, friendlys);
+		break;
+	case 4:
+	default:
+		Revenge(enemys, friendlys);
+		break;
+	
+	}
 
 }
 
@@ -185,14 +185,20 @@ void KingGoblin::Revenge(vector<Creature*>& enemys, vector<Creature*>& friendlys
 	int n = 0;
 	int damage = this->_atk * 2;
 	RevengeTargeting* defaultTarget = new RevengeTargeting();
+	vector<Creature*> targets;
 	for (int i = 0;i < 4;i++)
 	{
 		defaultTarget->rank = i;
 
 		Creature* target = (*defaultTarget)(*this, enemys, friendlys);
 		if (target)
-			target->Damaged(*this, damage);
+			targets.push_back(target);
 
+	}
+	for (auto target : targets)
+	{
+
+		target->Damaged(*this, damage);
 	}
 
 

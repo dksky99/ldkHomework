@@ -5,8 +5,8 @@ class Goblin :
 {
 public:
 	Goblin(string name, int hp, int atk, int arm, int speed);
-	void Act(vector<Creature*>& enemys, vector<Creature*>& friendlys) override;
+	void Act(vector<shared_ptr<Creature>> enemys, vector<shared_ptr<Creature>> friendlys) override;
 
-	void Bite(vector<Creature*>& enemys, vector<Creature*>& friendlys);
+	void Bite(vector<shared_ptr<Creature>> enemys, vector<shared_ptr<Creature>> friendlys);
 };
 

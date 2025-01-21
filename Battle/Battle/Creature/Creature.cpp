@@ -24,19 +24,20 @@ bool Creature::Update()
 }
 
 
-void Creature::Attack(Creature& victim, int dmg)
+void Creature::Attack(shared_ptr<Creature> victim, int dmg)
 {
-	victim.Damaged(*this,dmg);
+	victim->Damaged(shared_from_this(), dmg);
 }
 
-void Creature::Damaged(Creature& attacker, int atk)
+void Creature::Damaged(shared_ptr<Creature> attacker, int atk)
 {
 	int dmg = atk - _arm;
 
+	
 	if (dmg < 1)
 		dmg = 1;
 	_hp -= dmg;
-	HitLogging(&attacker, dmg);
+	HitLogging(attacker, dmg);
 	if (_hp <= 0)
 	{
 		_hp = 0;
@@ -51,7 +52,7 @@ bool Creature::IsAlive()
 	return _hp>0;
 }
 
-bool Creature::TryTargeting(Creature* target)
+bool Creature::TryTargeting(shared_ptr<Creature> target)
 {
 	if (target == nullptr)
 	{
@@ -66,23 +67,23 @@ bool Creature::TryTargeting(Creature* target)
 	return false;
 }
 
-void Creature::HitLogging(Creature* attacker, int dmg)
+void Creature::HitLogging(shared_ptr<Creature> attacker, int dmg)
 {
 	
-	unordered_map<Creature*,int>::iterator result = find_if(hitLog.begin(), hitLog.end(), [attacker](std::pair<const Creature*, int> a) {return attacker == a.first;});
+	unordered_map<weak_ptr<Creature>,int>::iterator result = find_if(hitLog.begin(), hitLog.end(), [attacker](std::pair<weak_ptr<Creature>, int> a) {return attacker == a.first.lock();});
 	if (result!=hitLog.end())
 	{
 		result->second += dmg;
 	}
 	else
 	{
-		auto a=make_pair(attacker, dmg);
+		pair<weak_ptr<Creature>,int> a=make_pair(attacker, dmg);
 		hitLog.insert(a);
 
 	}
 }
 
-const unordered_map<Creature*, int>& Creature::GetHitRank()
+const unordered_map<weak_ptr<Creature>, int>& Creature::GetHitRank()
 {
 	return hitLog;
 }
