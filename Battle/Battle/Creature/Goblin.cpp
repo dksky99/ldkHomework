@@ -8,7 +8,7 @@ Goblin::Goblin(string name, int hp, int atk, int arm, int speed):Monster(name, h
 	cout << "고블린 생성" << endl;
 }
 
-void Goblin::Act(vector<Creature*>& enemys, vector<Creature*>& friendlys)
+void Goblin::Act(vector<shared_ptr<Creature>>& enemys, vector<shared_ptr<Creature>>& friendlys) 
 {
 
 	if (!IsAlive())
@@ -19,16 +19,17 @@ void Goblin::Act(vector<Creature*>& enemys, vector<Creature*>& friendlys)
 
 }
 
-void Goblin::Bite(vector<Creature*>& enemys, vector<Creature*>& friendlys)
+void Goblin::Bite(vector<shared_ptr<Creature>>& enemys, vector<shared_ptr<Creature>>& friendlys) 
+
 {
 	cout << this->_name << "가 Bite 시전" << endl;
 	int n = 0;
-	Targeting* defaultTarget = new RandomTargeting();
+	shared_ptr<Targeting> defaultTarget = make_shared<RandomTargeting>();
 	
 
 	int damage = this->_atk;
 
-	Creature* target = (*defaultTarget)(*this, enemys, friendlys);
+	shared_ptr<Creature> target = (*defaultTarget)(*this, enemys, friendlys);
 	if (target)
 		target->Damaged(*this, damage);
 

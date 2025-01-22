@@ -22,6 +22,21 @@
 
 using namespace std;
 
+
+// Macro
+#include "GMacro.h"
+
+
+//Math
 #include "Math/Vector.h"
 
-#define LERP(s,e,t) s+(e-s)*t
+
+//Scene
+#include "Scene/Scene.h"
+
+//Program
+#include "Program/Program.h"
+
+//이런 전역변수가 있어요. 
+extern Vector mousePos;
+extern HWND hWnd; //윈도우 핸들.

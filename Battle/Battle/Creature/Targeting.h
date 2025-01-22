@@ -7,14 +7,14 @@ class Targeting
 public:
 	Targeting() = default;
 	~Targeting() {}
-	virtual  Creature* operator()(Creature& owner, vector<Creature*> enemys, vector<Creature*> friendlys) ;
+	virtual shared_ptr<Creature> operator()(shared_ptr<Creature> owner, vector< shared_ptr<Creature>>& enemys, vector< shared_ptr<Creature>>& friendlys) ;
 };
 
 class RandomTargeting :public Targeting
 {
 public:
 	RandomTargeting() = default;
-	virtual Creature* operator()(Creature& owner, vector<Creature*> enemys, vector<Creature*> friendlys) override;
+	virtual shared_ptr<Creature> operator()(shared_ptr<Creature> owner, vector< shared_ptr<Creature>>& enemys, vector< shared_ptr<Creature>>& friendlys) override;
 
 
 };
@@ -23,7 +23,7 @@ class RevengeTargeting :public Targeting
 {
 public:
 	RevengeTargeting() = default;
-	virtual Creature* operator()(Creature& owner, vector<Creature*> enemys, vector<Creature*> friendlys)override;
+	virtual shared_ptr<Creature> operator()(shared_ptr<Creature> owner, vector< shared_ptr<Creature>>& enemys, vector< shared_ptr<Creature>>& friendlys) override;
 public:
 	int rank=0;
 
@@ -32,7 +32,7 @@ public:
 class LowHPTargeting :public Targeting
 {
 public:
-	virtual Creature* operator()(Creature& owner, vector<Creature*> enemys, vector<Creature*> friendlys)override;
+	virtual shared_ptr<Creature> operator()(shared_ptr<Creature> owner, vector< shared_ptr<Creature>>& enemys, vector< shared_ptr<Creature>>& friendlys) override;
 
 
 	LowHPTargeting() = default;
@@ -41,7 +41,7 @@ class HighHPTargeting :public Targeting
 {
 public:
 	HighHPTargeting() = default;
-	virtual Creature* operator()(Creature& owner, vector<Creature*> enemys, vector<Creature*> friendlys)override;
+	virtual shared_ptr<Creature> operator()(shared_ptr<Creature> owner, vector< shared_ptr<Creature>>& enemys, vector< shared_ptr<Creature>>& friendlys) override;
 
 };
 
@@ -50,10 +50,10 @@ class AggroTargeting :public Targeting
 {
 public:
 	AggroTargeting() = default;
-	virtual Creature* operator()(Creature& owner, vector<Creature*> enemys, vector<Creature*> friendlys)override;
+	virtual shared_ptr<Creature> operator()(shared_ptr<Creature> owner, vector< shared_ptr<Creature>>& enemys, vector< shared_ptr<Creature>>& friendlys) override;
 	~AggroTargeting() ;
 public:
-	Creature* target=nullptr;
+	weak_ptr<Creature> target;
 
 };
 

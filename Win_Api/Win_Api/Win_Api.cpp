@@ -19,8 +19,9 @@
     WM_COMMAND  - 애플리케이션 메뉴를 처리합니다.
     WM_PAINT    - 주 창을 그립니다.
     WM_DESTROY  - 종료 메시지를 게시하고 반환합니다.
-    WM_CREATE
-    WM_MOUSEMOVE
+    WM_CREATE   - 창이 생성됬을떄 
+    WM_MOUSEMOVE - 마우스 포인터가 움직였을때
+    WM_TIMER    - 특정 시간마다 호출
 
 
    윈도우에서 발생하는 메시지를 처리하는 곳
@@ -42,6 +43,18 @@
     선형보간 :  start+(end-start)*t 
     종점이 멀수록 빠르다.
 
+    extern :  아직 읽지않은 파일에 이런 전역변수가 있다는걸 알리는용도
+
+    Window API는 좌표가
+
+    0,0
+
+            Width,Height 
+    로 구성된다. 좌표계가 거꾸로다 x축은 오른쪽으로갈수록 +가 맞지만 y축은 아래로 갈수록 +다
+
+
+    2D는 그리는 순서에 따라 위로 올라오는 물체가 다르다.
+    3D는 z값에 따라 가려지는 개체가 다르다.
 
 
 */
@@ -177,7 +190,9 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 // 윈도우에서 발생하는 메시지를 처리하는 곳
 
 Vector mousePos;
-Vector circleCenter = {0,0};
+
+shared_ptr<Program> program;
+
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
     switch (message)
@@ -186,6 +201,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     case WM_CREATE :
     {
         //타이머 설정.: 1ms마다 WM_Timer msg 생성 Update와 비슷한 효과
+        program = make_shared<Program>();
         SetTimer(hWnd, 1, 1, nullptr);
     }
     break;
@@ -214,15 +230,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             HDC hdc = BeginPaint(hWnd, &ps);
             // TODO: 여기에 hdc를 사용하는 그리기 코드를 추가합니다...
 
-            circleCenter = LERP(circleCenter,mousePos,0.2);
-            //타원을 그리는 코드.
-
-            Ellipse(hdc, circleCenter.x - 70, circleCenter.y - 70, circleCenter.x + 70, circleCenter.y + 70);
-
-            Rectangle(hdc, mousePos.x-25, mousePos.y-25, mousePos.x+25, mousePos.y+25);
-
-            //MoveToEx(hdc, 350, 350,nullptr);
-            //LineTo(hdc, mousePos.x, mousePos.y);
+            program->Render(hdc);
 
             EndPaint(hWnd, &ps);
         }
@@ -244,6 +252,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     case WM_TIMER :
     {
         InvalidateRect(hWnd, nullptr, true); //WM_Paint 메시지와 관련있는 애
+        program->Update();
 
     }
     break;

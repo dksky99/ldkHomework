@@ -3,18 +3,18 @@
 #include "Creature.h"
 #include "Targeting.h"
 
-Creature* Targeting::operator()(Creature& owner, vector<Creature*> enemys, vector<Creature*> friendlys)
+shared_ptr<Creature> Targeting::operator()(shared_ptr<Creature> owner, vector< shared_ptr<Creature>>& enemys, vector< shared_ptr<Creature>>& friendlys)
 {
 	return nullptr;
 
 }
 
-Creature* RandomTargeting::operator()(Creature& owner, vector<Creature*> enemys, vector<Creature*> friendlys)
+shared_ptr<Creature> RandomTargeting::operator()(shared_ptr<Creature> owner, vector< shared_ptr<Creature>>& enemys, vector< shared_ptr<Creature>>& friendlys)
 {
 
-	vector<Creature*> result;
+	vector<shared_ptr<Creature>> result;
 	result.resize(enemys.size());
-	auto iter = copy_if(enemys.begin(), enemys.end(), result.begin(), [](Creature* i)
+	auto iter = copy_if(enemys.begin(), enemys.end(), result.begin(), [](shared_ptr<Creature> i)
 		{
 			if (i == nullptr)
 				return false;
@@ -36,20 +36,20 @@ Creature* RandomTargeting::operator()(Creature& owner, vector<Creature*> enemys,
 
 	return *iter2;
 }
- Creature* RevengeTargeting::operator()(Creature& owner, vector<Creature*> enemys, vector<Creature*> friendlys)
+ shared_ptr<Creature> RevengeTargeting::operator()(shared_ptr<Creature> owner, vector< shared_ptr<Creature>>& enemys, vector< shared_ptr<Creature>>& friendlys)
 {
 	//기록된 입은피해 리스트의 수량보다 얻으려는 순위가 더 높다면 nullptr반환. 
 
 
 
-	vector<pair<Creature*, int>> rankList;
-	vector<pair<Creature*, int>> result;
+	vector<pair<weak_ptr<Creature>, int>> rankList;
+	vector<pair<weak_ptr<Creature>, int>> result;
 
 	result.resize(enemys.size());
 
-	for (auto iter = owner.GetHitRank().begin(); iter != owner.GetHitRank().end();iter++)
+	for (auto iter = owner->GetHitRank().begin(); iter != owner->GetHitRank().end();iter++)
 	{
-		pair<Creature*, int> temp = *iter;
+		pair<weak_ptr<Creature>, int> temp = *iter;
 		rankList.push_back(temp);
 	}
 
@@ -66,7 +66,7 @@ Creature* RandomTargeting::operator()(Creature& owner, vector<Creature*> enemys,
 
 	if (iter2 != enemys.end())
 	{
-		cout << rankList[rank].second << "의 피해를 가한 적" << rankList[rank].first->GetName() <<endl;
+		cout << rankList[rank].second << "의 피해를 가한 적" << rankList[rank].first.lock()->GetName() <<endl;
 
 
 		return *iter2;
@@ -78,10 +78,10 @@ Creature* RandomTargeting::operator()(Creature& owner, vector<Creature*> enemys,
 
 
 
- Creature* LowHPTargeting::operator()(Creature& owner, vector<Creature*> enemys, vector<Creature*> friendlys)
+ shared_ptr<Creature> LowHPTargeting::operator()(shared_ptr<Creature> owner, vector< shared_ptr<Creature>>& enemys, vector< shared_ptr<Creature>>& friendlys)
  {
 
-	 vector<Creature*> result;
+	 vector<shared_ptr<Creature>> result;
 	 result.resize(enemys.size());
 	 auto iter = copy_if(enemys.begin(), enemys.end(), result.begin(), [](Creature* i)
 		 {
@@ -104,10 +104,10 @@ Creature* RandomTargeting::operator()(Creature& owner, vector<Creature*> enemys,
 
 
 
- Creature* HighHPTargeting::operator()(Creature& owner, vector<Creature*> enemys, vector<Creature*> friendlys)
+ shared_ptr<Creature> HighHPTargeting::operator()(shared_ptr<Creature> owner, vector< shared_ptr<Creature>>& enemys, vector< shared_ptr<Creature>>& friendlys)
  {
 
-	 vector<Creature*> result;
+	 vector<shared_ptr<Creature>> result;
 	 result.resize(enemys.size());
 	 auto iter = copy_if(enemys.begin(), enemys.end(), result.begin(), [](Creature* i)
 		 {
@@ -128,13 +128,17 @@ Creature* RandomTargeting::operator()(Creature& owner, vector<Creature*> enemys,
 	 return *(result.begin());
  }
 
-Creature* AggroTargeting::operator()(Creature& owner, vector<Creature*> enemys, vector<Creature*> friendlys)
+ shared_ptr<Creature> AggroTargeting::operator()(shared_ptr<Creature> owner, vector< shared_ptr<Creature>>& enemys, vector< shared_ptr<Creature>>& friendlys)
  {
+	 if (target.expired())
+	 {
+		 return nullptr;
+	 }
 
-	 if (target->IsAlive())
+	 if (target.lock()->IsAlive())
 	 {
 
-		 return target;
+		 return target.lock();
 	 }
 
 	 return nullptr;
@@ -144,6 +148,4 @@ Creature* AggroTargeting::operator()(Creature& owner, vector<Creature*> enemys, 
 
 AggroTargeting::~AggroTargeting()
 {
-	if (target != nullptr)
-		target = nullptr;
 }

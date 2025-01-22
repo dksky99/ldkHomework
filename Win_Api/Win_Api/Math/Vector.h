@@ -10,7 +10,7 @@ public:
 	}
 	~Vector() {}
 
-	Vector operator+(const Vector& other)
+	Vector operator+(const Vector& other) const 
 	{
 		Vector result;
 		result.x = this->x + other.x;
@@ -18,7 +18,7 @@ public:
 
 		return Vector(this->x + other.x, this->y + other.y); // 
 	}
-	Vector operator-(const Vector& other)
+	Vector operator-(const Vector& other) const
 	{
 		Vector result;
 		result.x = this->x - other.x;
@@ -26,7 +26,7 @@ public:
 
 		return Vector(this->x - other.x, this->y - other.y); // 
 	}
-	Vector operator*(float value)
+	Vector operator*(float value) const 
 	{
 		Vector result;
 		result.x = this->x * value;
@@ -65,13 +65,13 @@ public:
 	{
 	}
 
-	float Dot(const Vector& other)
+	float Dot(const Vector& other) const
 	{
 
 		return 0.0f;
 	}
 
-	float Cross(const Vector& other)
+	float Cross(const Vector& other) const
 	{
 
 		return 0.0f;
