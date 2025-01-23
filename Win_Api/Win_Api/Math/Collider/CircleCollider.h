@@ -1,6 +1,6 @@
 #pragma once
 #include "Math/Collider/Collider.h"
-class CircleCollider : public Collider
+class CircleCollider : public Collider,public enable_shared_from_this<CircleCollider>
 {
 public:
 
@@ -17,9 +17,9 @@ public:
 	float GetRadius() { return _radius; }
 
 
-	bool IsCollision(const Vector& pos);
-	bool IsCollision(shared_ptr<CircleCollider> other);
-	bool IsCollision(shared_ptr<class RectCollider> other);
+	virtual bool IsCollision(const Vector& pos) override;
+	virtual bool IsCollision(shared_ptr<CircleCollider> other)override;
+	virtual bool IsCollision(shared_ptr<class RectCollider> other)override;
 
 
 private:

@@ -62,6 +62,10 @@ bool CircleCollider::IsCollision(shared_ptr<CircleCollider> other)
 
 bool CircleCollider::IsCollision(shared_ptr<RectCollider> other)
 {
+<<<<<<< HEAD
+	
+	return other->IsCollision(shared_from_this());
+=======
 
 	float rad = GetRadius() + other->GetRect().Length()/2;
 	float dist;
@@ -83,7 +87,7 @@ bool CircleCollider::IsCollision(shared_ptr<RectCollider> other)
 	if (other->Left() < GetCenter().x && other->Right() >GetCenter().x)
 	{
 		rad = GetRadius() + other->GetRect().y / 2;
-		dist = other->GetCenter().y - GetCenter().y;
+		dist = GetCenter().y - other->GetCenter().y;
 		if (dist < rad)
 			return true;
 	}
@@ -92,10 +96,11 @@ bool CircleCollider::IsCollision(shared_ptr<RectCollider> other)
 	{
 
 		rad = GetRadius() + other->GetRect().x / 2;
-		dist = other->GetCenter().x - GetCenter().x;
+		dist = GetCenter().x - other->GetCenter().x;
 		if (dist < rad)
 			return true;
 	}
 
 	return false;
+>>>>>>> f9430e5d69f681f4723ff7e792636903474954a7
 }

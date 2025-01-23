@@ -17,6 +17,11 @@ public:
 	void SetGreen() { _curPen = 0; }
 	void SetRed() { _curPen = 1; }
 
+
+	virtual bool IsCollision(const Vector& pos) { return false; };
+	virtual bool IsCollision(shared_ptr<class CircleCollider> other) { return false; };
+	virtual bool IsCollision(shared_ptr<class RectCollider> other) { return false; };
+
 private:
 	void Init();
 

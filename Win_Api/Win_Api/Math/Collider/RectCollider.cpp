@@ -67,43 +67,34 @@ bool RectCollider::IsCollision(shared_ptr<RectCollider> other)
 
 bool RectCollider::RectCollider::IsCollision(shared_ptr<CircleCollider> other)
 {
+	Vector dir = other->GetCenter() - GetCenter();
+	Vector rightV = Vector(1, 0);
+	Vector upV = Vector(0, 1);
 
+	//예외 처리. 만약 사각의 가장 긴 거리와 원의 반지름을 합친길이보다 두 중심의 거리가 더 멀다면 무조건 아님.
+	float length = dir.Length();
+	float rectHalfLength = _halfSize.Length();
+	float circleRadius = other->GetRadius();
+
+	if (length > rectHalfLength + other->GetRadius())
+		return false;
+
+	//x축 내적 : x축에 두 중심의 거리를 투영했을때 
+	float lengthx = abs(rightV.Dot(dir));
+	//x축의 최대 길이
+	if (lengthx > _halfSize.x + circleRadius)
+		return false;
+
+	//y축 내적 : y축에 두 중심의 거리를 투영.
+	float lengthy = abs(upV.Dot(dir));
+
+	//y축의 내적의 길이가 y축 최대길이보다 크면 충돌 x
+	if (lengthy > _halfSize.y + circleRadius)
+		return false;
+
+	return true;
 	
-	float rad = other->GetRadius() + _halfSize.Length();
-	float dist;
-
-	//사각형 내부에 원의 중심이 있는지 확인.
-	if (IsCollision(other->GetCenter()))
-		return true;
-	//사선방향에서의 접근
-	if (other->IsCollision(Vector(Left(), Top())))
-		return true;
-	if (other->IsCollision(Vector(Left(), Bottom())))
-		return true;
-	if (other->IsCollision(Vector(Right(), Top())))
-		return true;
-	if (other->IsCollision(Vector(Right(), Bottom())))
-		return true;
-	//6 12 방향에서 접근
 	
-	if (Left() < other->GetCenter().x&&Right()>other->GetCenter().x)
-	{
-		rad = other->GetRadius() + _halfSize.y;
-		dist = other->GetCenter().y - GetCenter().y;
-		if (dist < rad)
-			return true;
-	}
-	//3 9 방향에서 접근
-	if (Top() < other->GetCenter().y && Bottom() > other->GetCenter().y)
-	{
-
-		rad = other->GetRadius() + _halfSize.x;
-		dist = other->GetCenter().x - GetCenter().x;
-		if (dist < rad)
-			return true;
-	}
-
-	return false;
 
 	
 }

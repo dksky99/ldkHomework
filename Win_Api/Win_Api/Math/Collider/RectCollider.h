@@ -21,9 +21,9 @@ public:
 
 
 
-	bool IsCollision(const Vector& pos);
-	bool IsCollision(shared_ptr<RectCollider> other);
-	bool IsCollision(shared_ptr<class CircleCollider> other);
+	virtual bool IsCollision(const Vector& pos)override;
+	virtual bool IsCollision(shared_ptr<RectCollider> other)override;
+	virtual bool IsCollision(shared_ptr<class CircleCollider> other)override;
 
 private:
 

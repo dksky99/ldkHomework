@@ -63,19 +63,43 @@ public:
 
 	void Noramlize()
 	{
+		float l = Length();
+		x /= l;
+		y /= l;
+
+	}
+	Vector NormalVector() const
+	{
+		Vector result = *this;
+		result.Noramlize();
+		return result;
 	}
 
 	float Dot(const Vector& other) const
 	{
 
-		return 0.0f;
+		//내적이 0이 나오면 수직이란 뜻
+		return x*other.x+y*other.y;
 	}
 
 	float Cross(const Vector& other) const
 	{
-
-		return 0.0f;
+		//외적이 0이라면 평행이란 뜻
+		return x*other.y-y*other.x;
 	}
+
+	//v1 과 v2는 다른 선분의 양끝과 자신의 한 끝점과의 선분으로 이렇게 만들어진 두 선을 원본과 외적하여 각자 +,-가 나와 곱했을때 -가 나오면 교차하는것.
+	//반시계방향으로갈때 +가 나오고 시계방향으로 갈떄 -가나온다.
+	float IsBetween(const Vector& v1, const Vector& v2)
+	{
+
+		float cross1 = this->Cross(v1);
+		float cross2 = this->Cross(v2);
+
+		return cross1 * cross2 < 0;
+
+	}
+
 
 	void PrintV()
 	{
