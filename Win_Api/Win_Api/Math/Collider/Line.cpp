@@ -26,7 +26,7 @@ void Line::Render(HDC hdc)
 
 }
 
-bool Line::IsCollision(shared_ptr<Line> other)
+Line::HitResult Line::IsCollision(shared_ptr<Line> other)
 {
 	// 방향을 따라서 그 선의 양끝이 자신의 반대편에 있는지 
 	Vector v1Dir = end - start;
@@ -41,7 +41,20 @@ bool Line::IsCollision(shared_ptr<Line> other)
 
 	bool v2_between = v2Dir.IsBetween(a2, b2);
 
-	return v1_between&&v2_between;
+
+	HitResult hit;
+	hit.isCollision= v1_between&&v2_between;
+	if (hit.isCollision == false)
+		return hit;
+
+	float leftB = abs(v1Dir.Cross(a1));
+	float rightB = abs(v1Dir.Cross(b1));
+
+	float f = leftB / (leftB + rightB);
+
+	hit.hitPoint = LERP(other->start, other->end, f);
+
+	return hit;
 
 
 	
@@ -53,8 +66,8 @@ bool Line::IsCollision(shared_ptr<Line> other)
 
 bool Line::CollisionPoint(shared_ptr<Line> other ,Vector& ret)
 {
-	if (!IsCollision(other))
-		return false;
+	
+	
 
 	//분모
 	float denom = (end.x - start.x) * (other->end.y - other->start.y) - (end.y - start.y) * (other->end.x - other->start.x);

@@ -4,6 +4,7 @@
 #include "Scene/CollisionScene.h"
 #include "Scene/LineScene.h"
 #include "Scene/LineCollisionScene.h"
+#include "Scene/CannonScene.h"
 
 
 
@@ -11,7 +12,7 @@
 
 Program::Program()
 {
-	_scene = make_shared<LineCollisionScene>();
+	_scene = make_shared<CannonScene>();
 
 }
 

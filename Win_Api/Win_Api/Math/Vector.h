@@ -41,10 +41,17 @@ public:
 
 		return *this;
 	}
-	Vector& operator++()
+	Vector& operator+=(const Vector& other)
 	{
-		this->x += 1.0f;
-		this->y += 1.0f;
+		this->x += other.x;
+		this->y += other.y;
+
+		return *this;
+	}
+	Vector& operator-=(const Vector& other)
+	{
+		this->x -= other.x;
+		this->y -= other.y;
 
 		return *this;
 	}
@@ -99,7 +106,10 @@ public:
 		return cross1 * cross2 < 0;
 
 	}
+	Vector Rotate(float theta)
+	{
 
+	}
 
 	void PrintV()
 	{

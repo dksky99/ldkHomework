@@ -3,7 +3,16 @@
 
 class Line :public Collider
 {
+	
+
 public:
+
+	struct HitResult
+	{
+		Vector hitPoint=Vector();
+		bool isCollision=false;
+	};
+
 	Line(Vector start, Vector end) ;
 	~Line();
 
@@ -12,7 +21,7 @@ public:
 
 	void Render(HDC hdc) override;
 
-	bool IsCollision(shared_ptr<Line> other);
+	HitResult IsCollision(shared_ptr<Line> other);
 
 	bool CollisionPoint(shared_ptr<Line> other, Vector& ret);
 public:

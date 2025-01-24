@@ -21,13 +21,12 @@ void LineCollisionScene::Update()
 	_line1->Update();
 	_line2->Update();
 	_collidePoint->Update();
-
-	if (_line1->IsCollision(_line2))
+	Line::HitResult hit= _line1->IsCollision(_line2);
+	if (hit.isCollision)
 	{
 		_line1->SetRed();
 		Vector temp;
-		if (_line1->CollisionPoint(_line2, temp))
-			_collidePoint->SetCenter(temp);
+		_collidePoint->SetCenter(hit.hitPoint);
 
 	}
 	else
