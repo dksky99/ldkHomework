@@ -17,12 +17,9 @@ void Ball::Update()
 	if (!isActive)
 		return;
 	//°¡¼Ó
-	_theta += 0.05f;
-	_gravityDir += _gravityDir;
-	Vector a = Vector(0,sinf(_theta));
-	AddForce(a*2);
-	AddForce(_ballDir*_ballSpeed);
-	AddForce(_gravityDir);
+	SinMove();
+	//GravityMove();
+	BasicMove();
 	_circle->Update();
 
 	if (_circle->GetCenter().x > WIN_WIDTH || _circle->GetCenter().x <0 || _circle->GetCenter().y>WIN_HEIGHT || _circle->GetCenter().y < 0)
@@ -40,3 +37,40 @@ void Ball::AddForce(Vector v)
 {
 	_circle->SetCenter(_circle->GetCenter() + v);
 }
+
+void Ball::GravityMove()
+{
+	if (!isActive)
+		return;
+
+	_gravityDir += _gravityWeight;
+	AddForce(_gravityDir);
+
+}
+
+void Ball::SinMove()
+{
+
+	if (!isActive)
+		return;
+	Vector normal = _ballDir.NormalVector();
+	normal=normal.Rotate(90);
+	float a = 2.0f;
+	
+	float offset = sinf(_theta)*a;
+	_theta += 0.05f;
+
+	
+	 normal=(normal * offset);
+
+	AddForce(normal);
+
+}
+
+void Ball::BasicMove()
+{
+	if (!isActive)
+		return;
+	AddForce(_ballDir * _ballSpeed);
+}
+

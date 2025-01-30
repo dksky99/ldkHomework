@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Objects/Object.h"
+#include "Scene/CannonScene.h"
 
 class Cannon : public Object, public enable_shared_from_this<Cannon>
 {
@@ -21,7 +22,14 @@ public:
 	void Move();
 	void Fire();
 	shared_ptr<class CircleCollider> GetCollider() { return _body; }
-	
+	void TurnFinish() { _myTurn = false; }
+	void TurnStart() { _myTurn = true; }
+
+	void SetTurnFinish(TurnFinishFunc f, CannonScene* scene) { turnfinish = f; _scene = scene; }
+private:
+
+	float GetMouseAngle();
+
 
 private:
 
@@ -40,7 +48,9 @@ private:
 
 	const float _attackSpeed = 3.0f;
 	
+	bool _myTurn=false;
 
-
+	TurnFinishFunc turnfinish;
+	class CannonScene* _scene;
 };
 

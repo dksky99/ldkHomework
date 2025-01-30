@@ -40,8 +40,10 @@ void Cannon::Update()
 		ball->Update();
 	}
 	
-	_delay += 0.1f;
 
+	if (_myTurn == false)
+		return;
+	_delay += 0.1f;
 	Move();
 	Fire();
 }
@@ -71,14 +73,15 @@ void Cannon::Move()
 	}
 
 	
-	if (GetKeyState('W') & 0x8000)
-	{
-		_barrel->SetAngle(_barrel->GetAngle() - 0.1f);
-	}
-	if (GetKeyState('S') & 0x8000)
-	{
-		_barrel->SetAngle(_barrel->GetAngle() + 0.1f);
-	}
+	//if (GetKeyState('W') & 0x8000)
+	//{
+	//	_barrel->SetAngle(_barrel->GetAngle() - 0.1f);
+	//}
+	//if (GetKeyState('S') & 0x8000)
+	//{
+	//	_barrel->SetAngle(_barrel->GetAngle() + 0.1f);
+	//}
+	_barrel->SetAngle(GetMouseAngle());
 	
 
 }
@@ -99,6 +102,30 @@ void Cannon::Fire()
 		(*iter)->SetDir(_barrel->GetDir());
 		(*iter)->isActive = true;
 
+		_scene->TurnFinish();
+
 	}
 }
 
+float Cannon::GetMouseAngle()
+{
+	Vector temp = mousePos - _body->GetCenter();
+	float length = temp.Length();
+	float result = atan(temp.y / temp.x);
+	
+
+
+	if (temp.x < 0 && temp.y < 0)
+	{
+
+		result -= PI;
+	}
+
+	else if (temp.x < 0 && temp.y > 0)
+	{
+		result+=PI;
+
+	}
+
+	return result;
+}

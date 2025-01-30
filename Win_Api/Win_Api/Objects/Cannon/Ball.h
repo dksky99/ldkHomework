@@ -18,6 +18,11 @@ public:
     void SetPos(Vector pos) { _circle->SetCenter(pos); _theta = 0;_gravityDir = Vector(0, 0.00001); }
 
     void SetDir(Vector v) { _ballDir = v.NormalVector(); }
+    void GravityMove();
+    void SinMove();
+    void BasicMove();
+    
+private:
 
 private:
  
@@ -26,7 +31,8 @@ private:
 
     Vector _ballDir = Vector(0, 0);
     Vector _addDir=Vector(0,0);
-    Vector _gravityDir = Vector(0, 0.001);
+    const Vector _gravityWeight = Vector(0, 0.03);
+    Vector _gravityDir = Vector(0, 0);
     float _theta=0;
 
 };

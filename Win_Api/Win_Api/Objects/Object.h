@@ -9,7 +9,10 @@ public:
 	virtual void Render(HDC hdc) abstract;
 
 	bool isActive=false;
-protected:
+	bool activeGravity = false;
 
+
+protected:
+	Vector _position;
 };
 

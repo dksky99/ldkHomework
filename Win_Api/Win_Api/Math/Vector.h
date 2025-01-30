@@ -108,9 +108,24 @@ public:
 	}
 	Vector Rotate(float theta)
 	{
+		float cosTheta = std::cosf(theta);
+		float sinTheta = std::sinf(theta);
 
+		return {
+		x * cosTheta - y * sinTheta,
+		x * sinTheta + y * cosTheta 
+		};
 	}
+	Vector Rotate(const Vector& target)
+	{
+		float cosTheta = Dot(target);
+		float sinTheta = Cross(target);
 
+		return {
+		x * cosTheta - y * sinTheta,
+		x * sinTheta + y * cosTheta
+		};
+	}
 	void PrintV()
 	{
 	}
