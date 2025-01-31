@@ -13,7 +13,7 @@ public:
 
     virtual void Render(HDC hdc) override;
 
-    void AddForce(Vector v);
+    void AddVector(Vector v);
     
     void SetPos(Vector pos) { _circle->SetCenter(pos); _theta = 0;_gravityDir = Vector(0, 0.00001); }
 
@@ -21,6 +21,8 @@ public:
     void GravityMove();
     void SinMove();
     void BasicMove();
+
+    shared_ptr<CircleCollider> GetCollider() { return _circle; }
     
 private:
 

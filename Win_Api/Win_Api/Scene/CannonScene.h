@@ -5,6 +5,15 @@ class CannonScene :
     public Scene, public enable_shared_from_this<CannonScene>
 {
 public:
+
+    enum ECannonTurn
+    {
+        ONE,
+        TWO,
+        TURNCOUNT
+    };
+
+
     CannonScene();
     ~CannonScene();
 
@@ -15,11 +24,12 @@ public:
 
     void TurnFinish();
 private:
-
+    void CollisionCheck();
 private:
     shared_ptr<class Cannon> _cannon1;
     shared_ptr<class Cannon> _cannon2;
-    bool _turn=true;
+    
+    ECannonTurn _curTurn;
 
 };
 

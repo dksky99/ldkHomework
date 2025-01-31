@@ -5,10 +5,13 @@
 
 RectCollider::RectCollider(float x, float y, int width, int height):Collider(x,y), _halfSize(width/2,height/2)
 {
+
+	_type = ColType::Rect;
 }
 
 RectCollider::RectCollider(Vector center, Vector size):Collider(center),_halfSize(size.x/2,size.y/2)
 {
+	_type = ColType::Rect;
 }
 
 RectCollider::~RectCollider()

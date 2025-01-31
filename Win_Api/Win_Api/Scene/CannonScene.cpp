@@ -8,8 +8,9 @@ CannonScene::CannonScene()
 {
 	_cannon1 = make_shared<Cannon>();
 	_cannon2 = make_shared<Cannon>();
-	_cannon1->SetTurnFinish(&CannonScene::TurnFinish,this);
-	_cannon2->SetTurnFinish(&CannonScene::TurnFinish, this);
+	//functional을 사용하기위해 함수와 객체를 같이 묶어서 매개변수로 보내는 방법.
+	_cannon1->SetTurnFinish(bind( & CannonScene::TurnFinish,this));
+	_cannon2->SetTurnFinish(bind( & CannonScene::TurnFinish, this));
 	TurnFinish();
 }
 
@@ -21,6 +22,8 @@ void CannonScene::Update()
 {
 	_cannon1->Update();
 	_cannon2->Update();
+
+	CollisionCheck();
 
 }
 
@@ -34,18 +37,41 @@ void CannonScene::Render(HDC hdc)
 
 void CannonScene::TurnFinish()
 {
-	_turn = !_turn;
-
-	if (_turn)
+	//순환구조
+	_curTurn = static_cast<CannonScene::ECannonTurn>((_curTurn + 1) % ECannonTurn::TURNCOUNT);
+	switch (_curTurn)
+	{
+	case CannonScene::ONE:
 	{
 		_cannon1->TurnStart();
 		_cannon2->TurnFinish();
 
 	}
-	else
+		break;
+	case CannonScene::TWO:
 	{
 		_cannon2->TurnStart();
 		_cannon1->TurnFinish();
 
+	}
+		break;
+
+
+	default:
+		break;
+	}
+
+}
+
+void CannonScene::CollisionCheck()
+{
+
+	for (auto ball : _cannon1->GetBalls())
+	{
+		_cannon2->IsCollision(ball);
+	}
+	for (auto ball : _cannon2->GetBalls())
+	{
+		_cannon1->IsCollision(ball);
 	}
 }

@@ -8,6 +8,7 @@
 
 Cannon::Cannon()
 {
+	isActive = true;
 	_speed = 10;
 
 	_body = make_shared<CircleCollider>(WIN_CENTER, 50);
@@ -32,14 +33,16 @@ void Cannon::PostInitialize()
 
 void Cannon::Update()
 {
-	_body->Update();
-	_barrel->Update();
 	for (auto ball : _balls)
 	{
 
 		ball->Update();
 	}
-	
+
+	if (isActive == false)
+		return;
+	_barrel->Update();
+	_body->Update();
 
 	if (_myTurn == false)
 		return;
@@ -50,18 +53,24 @@ void Cannon::Update()
 
 void Cannon::Render(HDC hdc)
 {
-	_barrel->Render(hdc);
-	_body->Render(hdc);
+
 	for (auto ball : _balls)
 	{
 
 		ball->Render(hdc);
 	}
+
+	if (!isActive)
+		return;
+	_barrel->Render(hdc);
+	_body->Render(hdc);
 }
 
 void Cannon::Move()
 {
 
+	if (isActive == false)
+		return;
 	if (GetKeyState('A') & 0x8000)
 	{
 		_body->SetCenter(_body->GetCenter() + Vector(-1, 0)*_speed);
@@ -89,6 +98,8 @@ void Cannon::Move()
 void Cannon::Fire()
 {
 
+	if (isActive == false)
+		return;
 	if (_delay < _attackSpeed)
 		return;
 
@@ -102,9 +113,26 @@ void Cannon::Fire()
 		(*iter)->SetDir(_barrel->GetDir());
 		(*iter)->isActive = true;
 
-		_scene->TurnFinish();
+		if (turnfinish != nullptr)
+		{
+			turnfinish();
+		}
 
 	}
+}
+
+bool Cannon::IsCollision(shared_ptr<Ball> ball)
+{
+
+	if (_body->IsCollision(ball->GetCollider()))
+	{
+		isActive = false;
+		ball->isActive = false;
+		return true;
+	}
+
+
+	return false;
 }
 
 float Cannon::GetMouseAngle()

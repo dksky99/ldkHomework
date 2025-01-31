@@ -26,12 +26,10 @@ void Goblin::Bite(vector<shared_ptr<Creature>>& enemys, vector<shared_ptr<Creatu
 	int n = 0;
 	shared_ptr<Targeting> defaultTarget = make_shared<RandomTargeting>();
 	
-
 	int damage = this->_atk;
 
-	shared_ptr<Creature> target = (*defaultTarget)(*this, enemys, friendlys);
+	shared_ptr<Creature> target = (*defaultTarget)(shared_from_this(), enemys, friendlys);
 	if (target)
-		target->Damaged(*this, damage);
+		target->Damaged(shared_from_this(), damage);
 
-	delete defaultTarget;
 }

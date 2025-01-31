@@ -25,7 +25,10 @@ public:
 	void TurnFinish() { _myTurn = false; }
 	void TurnStart() { _myTurn = true; }
 
-	void SetTurnFinish(TurnFinishFunc f, CannonScene* scene) { turnfinish = f; _scene = scene; }
+	void SetTurnFinish(function<void(void)> fn) { turnfinish = fn; }
+
+	bool IsCollision(shared_ptr<class Ball> ball);
+	vector<shared_ptr<class Ball>> GetBalls() { return _balls; }
 private:
 
 	float GetMouseAngle();
@@ -50,7 +53,7 @@ private:
 	
 	bool _myTurn=false;
 
-	TurnFinishFunc turnfinish;
-	class CannonScene* _scene;
+	//턴종료하기위해 호출
+	function<void(void)> turnfinish;
 };
 

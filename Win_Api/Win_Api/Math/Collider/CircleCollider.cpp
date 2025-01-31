@@ -4,11 +4,12 @@
 
 CircleCollider::CircleCollider(float x, float y, float radius):Collider(x,y),_radius(radius)
 {
-
+	_type = ColType::Circle;
 }
 
 CircleCollider::CircleCollider(Vector v, float radius):Collider(v),_radius(radius)
 {
+	_type = ColType::Circle;
 }
 
 CircleCollider::~CircleCollider()

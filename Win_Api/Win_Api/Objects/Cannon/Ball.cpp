@@ -33,7 +33,7 @@ void Ball::Render(HDC hdc)
 	_circle->Render(hdc);
 }
 
-void Ball::AddForce(Vector v)
+void Ball::AddVector(Vector v)
 {
 	_circle->SetCenter(_circle->GetCenter() + v);
 }
@@ -44,7 +44,7 @@ void Ball::GravityMove()
 		return;
 
 	_gravityDir += _gravityWeight;
-	AddForce(_gravityDir);
+	AddVector(_gravityDir);
 
 }
 
@@ -63,7 +63,7 @@ void Ball::SinMove()
 	
 	 normal=(normal * offset);
 
-	AddForce(normal);
+	AddVector(normal);
 
 }
 
@@ -71,6 +71,6 @@ void Ball::BasicMove()
 {
 	if (!isActive)
 		return;
-	AddForce(_ballDir * _ballSpeed);
+	AddVector(_ballDir * _ballSpeed);
 }
 

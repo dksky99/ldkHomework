@@ -252,8 +252,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     //타이머를 설정하면 특정 딜레이마다 호출
     case WM_TIMER :
     {
-        InvalidateRect(hWnd, nullptr, true); //WM_Paint 메시지와 관련있는 애
         program->Update();
+        //현재 화면을 지우지 않겠따.
+        InvalidateRect(hWnd, nullptr, false); //WM_Paint 메시지와 관련있는 애
 
     }
     break;
