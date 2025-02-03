@@ -68,7 +68,7 @@ bool RectCollider::IsCollision(shared_ptr<RectCollider> other)
 	return true;
 }
 
-bool RectCollider::RectCollider::IsCollision(shared_ptr<CircleCollider> other)
+bool RectCollider::IsCollision(shared_ptr<CircleCollider> other)
 {
 	Vector dir = other->GetCenter() - GetCenter();
 	Vector rightV = Vector(1, 0);

@@ -10,6 +10,22 @@ public:
 	}
 	~Vector() {}
 
+	static Vector UP()
+	{
+		return Vector(0, -1);
+	}
+	static Vector Down()
+	{
+		return Vector(0, 1);
+	}
+	static Vector Right()
+	{
+		return Vector(1, 0);
+	}
+	static Vector Left()
+	{
+		return Vector(-1, 0);
+	}
 	Vector operator+(const Vector& other) const 
 	{
 		Vector result;

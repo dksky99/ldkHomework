@@ -27,8 +27,10 @@ public:
 	void SetCenter(const Vector& v) {_center= v;}
 	Vector GetCenter() { return _center; }
 
-	void SetGreen() { _curPen = 0; }
-	void SetRed() { _curPen = 1; }
+	void SetColor(int n) { _curPen = n; }
+	void SetBlack() { _curPen = 0; }
+	void SetGreen() { _curPen = 1; }
+	void SetRed() { _curPen = 2; }
 
 	bool IsCollision(shared_ptr<Collider>other);
 	virtual bool IsCollision(const Vector& pos) { return false; };

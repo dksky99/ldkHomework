@@ -21,7 +21,7 @@ public:
     void GravityMove();
     void SinMove();
     void BasicMove();
-
+    void GuideMove();
     shared_ptr<CircleCollider> GetCollider() { return _circle; }
     
 private:

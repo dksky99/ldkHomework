@@ -147,6 +147,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Objects\Arkanoid\Arkanoid_Wall.h" />
+    <ClInclude Include="Objects\Arkanoid\Arkanoid_Ball.h" />
+    <ClInclude Include="Objects\Arkanoid\Arkanoid_Player.h" />
+    <ClInclude Include="Scene\ArkanoidScene.h" />
+    <ClInclude Include="Objects\Maze\Maze.h" />
+    <ClInclude Include="Objects\Maze\Block.h" />
+    <ClInclude Include="Scene\MazeScene.h" />
     <ClInclude Include="Objects\Cannon\Ball.h" />
     <ClInclude Include="Objects\Cannon\Barrel.h" />
     <ClInclude Include="Objects\Object.h" />
@@ -170,6 +177,13 @@
     <ClInclude Include="Win_Api.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Objects\Arkanoid\Arkanoid_Wall.cpp" />
+    <ClCompile Include="Objects\Arkanoid\Arkanoid_Ball.cpp" />
+    <ClCompile Include="Objects\Arkanoid\Arkanoid_Player.cpp" />
+    <ClCompile Include="Scene\ArkanoidScene.cpp" />
+    <ClCompile Include="Objects\Maze\Maze.cpp" />
+    <ClCompile Include="Objects\Maze\Block.cpp" />
+    <ClCompile Include="Scene\MazeScene.cpp" />
     <ClCompile Include="Objects\Cannon\Ball.cpp" />
     <ClCompile Include="Objects\Cannon\Barrel.cpp" />
     <ClCompile Include="Objects\Object.cpp" />
