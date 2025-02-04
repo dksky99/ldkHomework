@@ -1,6 +1,6 @@
 #pragma once
 
-class Block;
+#include "Block.h"
 
 #define MAX_X 25
 #define MAX_Y 25
@@ -18,6 +18,13 @@ public:
 
 	void CreateMaze();
 
+	Vector StartPos() { return Vector(1, 1); }
+	Vector EndPos() { return Vector(MAX_X - 2, MAX_Y - 2); }
+
+
+	Block::Type GetBlockType(Vector pos);
+
+	void SetBlockType(Vector pos, Block::Type type);
 
 
 private:

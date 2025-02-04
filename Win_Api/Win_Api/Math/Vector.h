@@ -79,6 +79,18 @@ public:
 
 		return result;
 	}
+	bool operator==(const Vector& other) const
+	{
+		if (other.x == x)
+		{
+			if (other.y == y)
+			{
+				return true;
+			}
+		}
+
+		return false;
+	}
 	float Length() const 
 	{
 		return sqrtf(this->x * this->x + this->y * this->y);

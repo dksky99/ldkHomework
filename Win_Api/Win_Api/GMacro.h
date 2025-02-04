@@ -17,4 +17,5 @@
 #define BLUE		RGB(0,0,255)
 #define BLACK		RGB(0,0,0)
 #define WHITE		RGB(255,255,255)
+#define WINE		RGB(101, 3, 62)
 

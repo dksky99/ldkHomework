@@ -90,13 +90,11 @@ void Maze::CreateMaze()
 			{
 
 				_blocks[y][x]->SetType(Block::Type::ABLE);
-				continue;
 			}
 			//끝점 뚫기
 			if (x == MAX_X - 2 && y == MAX_Y - 2)
 			{
 				_blocks[y][x]->SetType(Block::Type::ABLE);
-				continue;
 			}
 			//연결할 노드 뚫기
 			if (x % 2 == 0 || y % 2 == 0)
@@ -134,4 +132,14 @@ void Maze::CreateMaze()
 
 		}
 	}
+}
+
+Block::Type Maze::GetBlockType(Vector pos)
+{
+	return _blocks[pos.y][pos.x]->GetBlockType();
+}
+
+void Maze::SetBlockType(Vector pos, Block::Type type)
+{
+	_blocks[pos.y][pos.x]->SetType(type);
 }
