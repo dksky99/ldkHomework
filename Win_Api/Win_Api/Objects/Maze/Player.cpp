@@ -9,7 +9,7 @@
 Player::Player(shared_ptr<Maze> maze) : _maze(maze)
 {
 	_maze.lock()->SetBlockType(_pos, Block::Type::PLAYER);
-	RightHand();
+	BFS(_maze.lock()->StartPos());
 }
 
 Player::~Player()
@@ -20,6 +20,8 @@ void Player::Update()
 {
 	if (_pathIndex >= _path.size())
 	{
+
+		//_maze.lock()->SetBlockType(_pos, Block::Type::FOOTPRINT);
 		return;
 	}
 	_delayTime += 0.03f;
@@ -105,10 +107,96 @@ void Player::RightHand()
 		if (s.empty() == true)
 			break;
 		Vector top = s.top();
+		
 		_path.push_back(top);
 		s.pop();
 	}
 	std::reverse(_path.begin(), _path.end());
+
+
+}
+
+void Player::BFS(Vector start)
+{
+	_discovered = vector<vector<bool>>(MAX_Y, vector<bool>(MAX_X, false));
+	_parent = vector<vector<Vector>>(MAX_Y, vector<Vector>(MAX_X, Vector(-1, -1)));
+
+	queue<Vector> q;
+	q.push(start);
+	_discovered[start.y][start.x] = true;
+	_parent[start.y][start.x] = start;
+
+	while (true)
+	{
+		Vector here = q.front();
+		q.pop();
+		if (here == _maze.lock()->EndPos())
+		{
+			break;
+		}
+		for (int i = 0;i < 4;i++)
+		{
+			Vector there = here + frontPos[i];
+
+			//동일 블록이냐 -> 가능성은 없지만 일단.
+			if (here == there)
+				continue;
+			//갈 수 있는곳이냐
+			if (CanGo(there)==false)
+				continue;
+			//이미 다녀온곳이냐
+			if (_discovered[there.y][there.x] == true)
+				continue;
+
+			q.push(there);
+			_discovered[there.y][there.x] = true;
+			_parent[there.y][there.x] = here;
+			_maze.lock()->SetBlockType(there, Block::Type::SEARCHED);
+
+
+
+
+		}
+
+	}
+	//끝점이 누구한테서 발견되었는지 타고올라가보기
+	Vector vertex = _maze.lock()->EndPos();
+	while (true)
+	{
+		if (start == vertex)
+			break;
+
+
+		vertex = _parent[vertex.y][vertex.x];
+		_path.push_back(vertex);
+	}
+	reverse(_path.begin(), _path.end());
+}
+
+void Player::StartDFS(Vector start)
+{
+	_discovered = vector<vector<bool>>(MAX_Y, vector<bool>(MAX_X, false));
+	
+	DFS(start);
+}
+
+void Player::DFS(Vector here)
+{
+	_discovered[here.y][here.x] = true;
+	for (int i = 0;i < 4;i++)
+	{
+		Vector there = here + frontPos[i];
+
+		//동일 블록이냐 -> 가능성은 없지만 일단.
+		if (here == there)
+			continue;
+		//갈 수 있는곳이냐
+		if (CanGo(there) == false)
+			continue;
+		//이미 다녀온곳이냐
+		if (_discovered[there.y][there.x] == true)
+			continue;
+	}
 
 
 }
