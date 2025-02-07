@@ -6,6 +6,8 @@ class Block;
 
 class Player
 {
+private:
+	
 	//Path
 	enum Direction
 	{
@@ -16,16 +18,44 @@ class Player
 		DIR_COUNT
 	};
 
-	Vector frontPos[4] = {
+	Vector frontPos[8] = {
 		{0,-1},
 		{-1,0},
 		{0,1},
-		{1,0}
+		{1,0},
+		{-1,-1},
+		{1,-1},
+		{1,1},
+		{-1,1}
 	};
 
+	struct Vertex
+	{
+		Vertex() :_pos(Vector(0, 0)), _cost(0) {}
+		Vertex(Vector pos, int cost) :_pos(pos), _cost(cost) {}
+
+		bool operator<(const Vertex& v) const
+		{
+			return _cost < v._cost;
+		}
+		bool operator>(const Vertex& v) const
+		{
+			return _cost > v._cost;
+		}
+
+		Vector _pos = Vector(0, 0);
+		int _cost = 0;
+
+	};
+
+
+
+
 public:
+
 	Player(shared_ptr<Maze> maze);
 	~Player();
+
 
 	void Update();
 	void Render(HDC hdc);
@@ -34,6 +64,8 @@ public:
 	void BFS(Vector start); //최소 간선의 개수.
 	void StartDFS(Vector start); //최소 간선의 개수.
 	void DFS(Vector here); //최소 간선의 개수.
+	void Djikstra(Vector start);
+
 	bool CanGo(Vector pos);
 
 
@@ -57,6 +89,12 @@ private:
 	//BFS
 	vector<vector<bool>> _discovered;
 	vector<vector<Vector>> _parent; 
+
+
+	//Djikstra
+	vector<vector<int>> _best;
+
+
 
 };
 

@@ -95,6 +95,7 @@ void Maze::CreateMaze()
 			if (x == MAX_X - 2 && y == MAX_Y - 2)
 			{
 				_blocks[y][x]->SetType(Block::Type::ABLE);
+				continue;
 			}
 			//연결할 노드 뚫기
 			if (x % 2 == 0 || y % 2 == 0)

@@ -9,7 +9,7 @@
 Player::Player(shared_ptr<Maze> maze) : _maze(maze)
 {
 	_maze.lock()->SetBlockType(_pos, Block::Type::PLAYER);
-	BFS(_maze.lock()->StartPos());
+	Djikstra(_maze.lock()->StartPos());
 }
 
 Player::~Player()
@@ -198,6 +198,67 @@ void Player::DFS(Vector here)
 			continue;
 	}
 
+
+}
+
+void Player::Djikstra(Vector start)
+{
+
+	_parent = vector<vector<Vector>>(MAX_Y, vector<Vector>(MAX_X, Vector(-1, -1)));
+	_best = vector<vector<int>>(MAX_Y, vector<int>(MAX_X, INT_MAX));
+
+	priority_queue<Vertex,vector<Vertex>,greater<Vertex>> pq;
+	_parent[start.y][start.x] = start;
+	_best[start.y][start.x] = 0;
+
+	pq.push(Vertex(start, 0));
+
+	while (true)
+	{
+		if (pq.empty())
+			break;
+
+		Vertex hereV = pq.top();
+		pq.pop();
+		Vector herePos = hereV._pos;
+
+		if (_best[herePos.y][herePos.x] < hereV._cost)
+			continue;
+
+		for (int i = 0;i < 8;i++)
+		{
+			Vector therePos = herePos + frontPos[i];
+
+			if (CanGo(therePos) == false)
+				continue;
+
+			int thereCost = hereV._cost +( i < 4 ? 10 : 14);
+
+			if (_best[therePos.y][therePos.x] < thereCost)
+				continue;
+
+			//예약
+			Vertex thereV=Vertex(therePos, thereCost);
+
+			pq.push(thereV);
+			_parent[therePos.y][therePos.x] = herePos;
+			_best[therePos.y][therePos.x] = thereCost;
+
+		}
+
+	}
+	//끝점이 누구한테서 발견되었는지 타고올라가보기
+	Vector vertex = _maze.lock()->EndPos();
+	while (true)
+	{
+		if (start == vertex)
+			break;
+
+
+		vertex = _parent[vertex.y][vertex.x];
+		_path.push_back(vertex);
+	}
+	reverse(_path.begin(), _path.end());
 
 }
 
