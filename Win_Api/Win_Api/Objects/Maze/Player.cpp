@@ -1,4 +1,4 @@
-#include "framework.h"
+ï»¿#include "framework.h"
 
 #include "Objects/Maze/Maze.h"
 #include "Objects/Maze/Block.h"
@@ -9,6 +9,7 @@
 Player::Player(shared_ptr<Maze> maze) : _maze(maze)
 {
 	_maze.lock()->SetBlockType(_pos, Block::Type::PLAYER);
+	//AStart(_maze.lock()->StartPos(),_maze.lock()->EndPos());
 	Djikstra(_maze.lock()->StartPos());
 }
 
@@ -20,11 +21,9 @@ void Player::Update()
 {
 	if (_pathIndex >= _path.size())
 	{
-
-		//_maze.lock()->SetBlockType(_pos, Block::Type::FOOTPRINT);
 		return;
 	}
-	_delayTime += 0.03f;
+	_delayTime += 0.1f;
 	if (_delayTime > 1.0f)
 	{
 		_delayTime = 0.0f;
@@ -59,7 +58,7 @@ void Player::RightHand()
 		Vector oldVector = pos + frontPos[curDir];
 		Vector newVector = pos + frontPos[newDir];
 
-		//¿À¸¥ÂÊÀ¸·Î °¥ ¼ö ÀÖ´Ù -> ¿À¸¥ÂÊÀ¸·Î È¸Àü
+		//ì˜¤ë¥¸ìª½ìœ¼ë¡œ ê°ˆ ìˆ˜ ìˆë‹¤ -> ì˜¤ë¥¸ìª½ìœ¼ë¡œ íšŒì „
 		if (CanGo(newVector))
 		{
 			curDir = newDir;
@@ -67,14 +66,14 @@ void Player::RightHand()
 			_path.push_back(pos);
 		}
 
-		//¿À¸¥ÂÊÀº ¸·ÇôÀÖ°í ¾ÕÀÌ ¿­·ÁÀÖÀ»¶§
+		//ì˜¤ë¥¸ìª½ì€ ë§‰í˜€ìˆê³  ì•ì´ ì—´ë ¤ìˆì„ë•Œ
 		else if(CanGo(oldVector))
 		{
 			pos = oldVector;
 			_path.push_back(pos);
 
 		}
-		//¿À¸¥ÂÊÀº ¸·ÇôÀÖ°í ÁøÇà¹æÇâµµ ¸·ÇôÀÖ´Ù -> È¸Àü
+		//ì˜¤ë¥¸ìª½ì€ ë§‰í˜€ìˆê³  ì§„í–‰ë°©í–¥ë„ ë§‰í˜€ìˆë‹¤ -> íšŒì „
 		else
 		{
 			curDir = (curDir+1+DIR_COUNT)%DIR_COUNT;
@@ -84,7 +83,7 @@ void Player::RightHand()
 
 
 	stack<Vector> s;
-	//»çÀÌÅ¬ Ã³¸®
+	//ì‚¬ì´í´ ì²˜ë¦¬
 	for (int i = 0;i < _path.size() - 1;i++)
 	{
 
@@ -138,13 +137,13 @@ void Player::BFS(Vector start)
 		{
 			Vector there = here + frontPos[i];
 
-			//µ¿ÀÏ ºí·ÏÀÌ³Ä -> °¡´É¼ºÀº ¾øÁö¸¸ ÀÏ´Ü.
+			//ë™ì¼ ë¸”ë¡ì´ëƒ -> ê°€ëŠ¥ì„±ì€ ì—†ì§€ë§Œ ì¼ë‹¨.
 			if (here == there)
 				continue;
-			//°¥ ¼ö ÀÖ´Â°÷ÀÌ³Ä
+			//ê°ˆ ìˆ˜ ìˆëŠ”ê³³ì´ëƒ
 			if (CanGo(there)==false)
 				continue;
-			//ÀÌ¹Ì ´Ù³à¿Â°÷ÀÌ³Ä
+			//ì´ë¯¸ ë‹¤ë…€ì˜¨ê³³ì´ëƒ
 			if (_discovered[there.y][there.x] == true)
 				continue;
 
@@ -159,7 +158,7 @@ void Player::BFS(Vector start)
 		}
 
 	}
-	//³¡Á¡ÀÌ ´©±¸ÇÑÅ×¼­ ¹ß°ßµÇ¾ú´ÂÁö Å¸°í¿Ã¶ó°¡º¸±â
+	//ëì ì´ ëˆ„êµ¬í•œí…Œì„œ ë°œê²¬ë˜ì—ˆëŠ”ì§€ íƒ€ê³ ì˜¬ë¼ê°€ë³´ê¸°
 	Vector vertex = _maze.lock()->EndPos();
 	while (true)
 	{
@@ -187,13 +186,13 @@ void Player::DFS(Vector here)
 	{
 		Vector there = here + frontPos[i];
 
-		//µ¿ÀÏ ºí·ÏÀÌ³Ä -> °¡´É¼ºÀº ¾øÁö¸¸ ÀÏ´Ü.
+		//ë™ì¼ ë¸”ë¡ì´ëƒ -> ê°€ëŠ¥ì„±ì€ ì—†ì§€ë§Œ ì¼ë‹¨.
 		if (here == there)
 			continue;
-		//°¥ ¼ö ÀÖ´Â°÷ÀÌ³Ä
+		//ê°ˆ ìˆ˜ ìˆëŠ”ê³³ì´ëƒ
 		if (CanGo(there) == false)
 			continue;
-		//ÀÌ¹Ì ´Ù³à¿Â°÷ÀÌ³Ä
+		//ì´ë¯¸ ë‹¤ë…€ì˜¨ê³³ì´ëƒ
 		if (_discovered[there.y][there.x] == true)
 			continue;
 	}
@@ -207,23 +206,26 @@ void Player::Djikstra(Vector start)
 	_parent = vector<vector<Vector>>(MAX_Y, vector<Vector>(MAX_X, Vector(-1, -1)));
 	_best = vector<vector<int>>(MAX_Y, vector<int>(MAX_X, INT_MAX));
 
-	priority_queue<Vertex,vector<Vertex>,greater<Vertex>> pq;
+	priority_queue<Vertex_Djikstra,vector<Vertex_Djikstra>,greater<Vertex_Djikstra>> pq;
 	_parent[start.y][start.x] = start;
 	_best[start.y][start.x] = 0;
 
-	pq.push(Vertex(start, 0));
+	pq.push(Vertex_Djikstra(start, 0));
 
 	while (true)
 	{
 		if (pq.empty())
 			break;
 
-		Vertex hereV = pq.top();
+		Vertex_Djikstra hereV = pq.top();
 		pq.pop();
 		Vector herePos = hereV._pos;
 
 		if (_best[herePos.y][herePos.x] < hereV._cost)
 			continue;
+
+
+
 
 		for (int i = 0;i < 8;i++)
 		{
@@ -237,17 +239,18 @@ void Player::Djikstra(Vector start)
 			if (_best[therePos.y][therePos.x] < thereCost)
 				continue;
 
-			//¿¹¾à
-			Vertex thereV=Vertex(therePos, thereCost);
+			//ì˜ˆì•½
+			Vertex_Djikstra thereV=Vertex_Djikstra(therePos, thereCost);
 
 			pq.push(thereV);
 			_parent[therePos.y][therePos.x] = herePos;
 			_best[therePos.y][therePos.x] = thereCost;
 
+
 		}
 
 	}
-	//³¡Á¡ÀÌ ´©±¸ÇÑÅ×¼­ ¹ß°ßµÇ¾ú´ÂÁö Å¸°í¿Ã¶ó°¡º¸±â
+	//ëì ì´ ëˆ„êµ¬í•œí…Œì„œ ë°œê²¬ë˜ì—ˆëŠ”ì§€ íƒ€ê³ ì˜¬ë¼ê°€ë³´ê¸°
 	Vector vertex = _maze.lock()->EndPos();
 	while (true)
 	{
@@ -259,6 +262,93 @@ void Player::Djikstra(Vector start)
 		_path.push_back(vertex);
 	}
 	reverse(_path.begin(), _path.end());
+
+}
+
+void Player::AStart(Vector start, Vector end)
+{
+
+	_parent = vector<vector<Vector>>(MAX_Y, vector<Vector>(MAX_X, Vector(-1, -1)));
+	_best = vector<vector<int>>(MAX_Y, vector<int>(MAX_X, INT_MAX));
+
+	priority_queue<Vertex, vector<Vertex>, greater<Vertex>> pq;
+	_parent[start.y][start.x] = start;
+	_best[start.y][start.x] = 0+start.ManhattanDistance(end) * 10;
+
+	pq.push(Vertex(start, 0,start.ManhattanDistance(end)*10));
+
+	while (true)
+	{
+		if (pq.empty() == true)
+		{
+			break;
+
+		}
+
+		Vertex hereV = pq.top();
+		Vector here = hereV._pos;
+
+		// ëì  ì²´í¬
+		if (here == end)
+			break;
+
+
+		pq.pop();
+		//ì´ì „ì— ë” ì¢‹ì€ ê²½ë¡œë¥¼ ë°œê²¬ ì‹œ ê·¸ë§Œ
+
+		if (hereV.f > _best[here.y][here.x])
+			continue;
+
+		for (int i = 0;i < 8;i++)
+		{
+			Vector there = here + frontPos[i];
+
+			//ë§‰íŒê³³ì´ë¼ë©´ ë„˜ì–´ê°€ê¸°
+			if (CanGo(there) == false)
+				continue;
+
+			//ì´ì „ì— ë” ì¢‹ì€ ê²½ë¡œê°€ ìˆì—ˆìœ¼ë©´ ë‹¤ìŒ ê±°
+
+			//ë‹¤ìŒ ë…¸ë“œì˜ ê°€ì¤‘ì¹˜
+			float thereG = hereV.g + i < 4 ? 10 : 14;
+			float thereH = there.ManhattanDistance(end) * 10;
+			float thereF = thereG + thereH;
+			// ë” ì¢‹ì€ thereì˜ bestê°€ ìˆìœ¼ë©´ continue
+			if (thereF > _best[there.y][there.x])
+			{
+				continue;
+			}
+
+			Vertex thereV = Vertex(there, thereG, thereH);
+			pq.push(thereV);
+			//ì‹¤ì œ ì½”ìŠ¤íŠ¸
+			_best[there.y][there.x] = thereF;
+			_parent[there.y][there.x] = here;
+			_maze.lock()->SetBlockType(there, Block::Type::SEARCHED);
+
+
+
+		}
+
+
+
+	}
+
+	//ëì ì´ ëˆ„êµ¬í•œí…Œì„œ ë°œê²¬ë˜ì—ˆëŠ”ì§€ íƒ€ê³ ì˜¬ë¼ê°€ë³´ê¸°
+	Vector vertex = _maze.lock()->EndPos();
+	_vertex.push_back(vertex);
+	while (true)
+	{
+
+		if (start == vertex)
+			break;
+
+
+		vertex = _parent[vertex.y][vertex.x];
+		_path.push_back(vertex);
+	}
+	reverse(_path.begin(), _path.end());
+
 
 }
 

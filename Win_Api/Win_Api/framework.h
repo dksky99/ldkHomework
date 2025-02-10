@@ -32,7 +32,7 @@ using namespace std;
 
 //Math
 #include "Math/Vector.h"
-
+#include "Math/DisJointSet.h"
 
 //Scene
 #include "Scene/Scene.h"

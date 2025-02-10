@@ -29,16 +29,16 @@ private:
 		{-1,1}
 	};
 
-	struct Vertex
+	struct Vertex_Djikstra
 	{
-		Vertex() :_pos(Vector(0, 0)), _cost(0) {}
-		Vertex(Vector pos, int cost) :_pos(pos), _cost(cost) {}
+		Vertex_Djikstra() :_pos(Vector(0, 0)), _cost(0) {}
+		Vertex_Djikstra(Vector pos, int cost) :_pos(pos), _cost(cost) {}
 
-		bool operator<(const Vertex& v) const
+		bool operator<(const Vertex_Djikstra& v) const
 		{
 			return _cost < v._cost;
 		}
-		bool operator>(const Vertex& v) const
+		bool operator>(const Vertex_Djikstra& v) const
 		{
 			return _cost > v._cost;
 		}
@@ -47,6 +47,28 @@ private:
 		int _cost = 0;
 
 	};
+
+	struct Vertex
+	{
+		Vertex()  {}
+		Vertex(Vector pos, int g,int h) :_pos(pos), g(g),h(h),f(g+h) {}
+
+		bool operator<(const Vertex& v) const
+		{
+			return f < v.f;
+		}
+		bool operator>(const Vertex& v) const
+		{
+			return f > v.f;
+		}
+
+		Vector _pos = Vector(0, 0);
+		int g = 0;
+		int h;
+		int f; //f=g+h
+
+	};
+
 
 
 
@@ -65,6 +87,7 @@ public:
 	void StartDFS(Vector start); //최소 간선의 개수.
 	void DFS(Vector here); //최소 간선의 개수.
 	void Djikstra(Vector start);
+	void AStart(Vector start, Vector end);
 
 	bool CanGo(Vector pos);
 

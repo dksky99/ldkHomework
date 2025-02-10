@@ -154,6 +154,9 @@ public:
 		x * sinTheta + y * cosTheta
 		};
 	}
+	float ManhattanDistance() { return x + y; };
+	float ManhattanDistance(Vector pos) { return abs(pos.x-x) + abs(pos.y-y); };
+
 	void PrintV()
 	{
 	}

@@ -10,6 +10,17 @@
 
 class Maze
 {
+
+	struct Edge
+	{
+		Vector u;
+		Vector v;
+		int cost;
+
+	};
+
+
+
 public:
 	Maze();
 	~Maze();
@@ -17,6 +28,7 @@ public:
 	void Render(HDC hdc);
 
 	void CreateMaze();
+	void CreateMaze_Kruskal();
 
 	Vector StartPos() { return Vector(1, 1); }
 	Vector EndPos() { return Vector(MAX_X - 2, MAX_Y - 2); }
@@ -30,6 +42,8 @@ public:
 private:
 
 	vector < vector<shared_ptr<Block>>> _blocks;
+
+
 
 
 };

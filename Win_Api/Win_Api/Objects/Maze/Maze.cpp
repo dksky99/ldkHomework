@@ -25,7 +25,7 @@ Maze::Maze()
 			_blocks[y].push_back(temp);
 		}
 	}
-	CreateMaze();
+	CreateMaze_Kruskal();
 }
 
 Maze::~Maze()
@@ -133,6 +133,97 @@ void Maze::CreateMaze()
 
 		}
 	}
+
+
+}
+
+void Maze::CreateMaze_Kruskal()
+{
+
+
+	//갈 수 있는 노드 만들기
+	for (int y = 0;y < MAX_Y;y++)
+	{
+		for (int x = 0;x < MAX_X;x++)
+		{
+			if (x % 2 == 0 || y % 2 == 0)
+			{
+				_blocks[y][x]->SetType(Block::Type::BLOCKED);
+
+			}
+			else
+			{
+				_blocks[y][x]->SetType(Block::Type::ABLE);
+
+			}
+
+		}
+	}
+
+	//Edges 생성.
+	vector<Edge> edges;
+
+	for (int y = 0;y < MAX_Y; y++)
+	{
+		for (int x = 0;x < MAX_X;x++)
+		{
+			//이곳이 노드가 아니고 간선이다.
+			if (x % 2 == 0 || y % 2 == 0)
+				continue;
+
+			if (x < MAX_X - 2)
+			{
+				int randCost = rand() % 100;
+				
+				Edge edge;
+				edge.u = {(float)x,(float)y };
+				edge.v = { (float)(x + 2),(float)y };
+				edge.cost = randCost;
+
+				edges.push_back(edge);
+
+			}
+			if (y < MAX_Y - 2)
+			{
+				int randCost = rand() % 100;
+
+				Edge edge;
+				edge.u = { (float)x,(float)y };
+				edge.v = { (float)(x ),(float)(y+2)};
+				edge.cost = randCost;
+
+				edges.push_back(edge);
+
+			}
+		}
+	}
+
+	sort(edges.begin(), edges.end(), [](const Edge& a, const Edge& b)->bool {
+		if (a.cost < b.cost)
+			return true;
+		return false;
+		});
+
+	DisJointSet set(MAX_X * MAX_Y);
+	
+	for (auto edge : edges)
+	{
+		int u = MAX_X * edge.u.y + edge.u.x;
+		int v = MAX_X * edge.v.y + edge.v.x;
+		
+		if (set.FindLeader(u) == set.FindLeader(v))
+			continue;
+
+		set.Merge(u, v);
+		int x = ((int)edge.u.x + (int)edge.v.x) / 2;
+		int y = ((int)edge.u.y + (int)edge.v.y) / 2;
+
+		_blocks[y][x]->SetType(Block::Type::ABLE);
+
+	}
+
+
+
 }
 
 Block::Type Maze::GetBlockType(Vector pos)
