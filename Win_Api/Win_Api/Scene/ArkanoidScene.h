@@ -12,6 +12,8 @@ public:
 
     void Render(HDC hdc) override;
 
+    void CollisionCheck();
+
 private:
 
     shared_ptr<class Arkanoid_Player> _player;

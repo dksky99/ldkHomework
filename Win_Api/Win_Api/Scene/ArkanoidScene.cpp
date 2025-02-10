@@ -37,6 +37,8 @@ void ArkanoidScene::Update()
 	{
 		wall->Update();
 	}
+
+	CollisionCheck();
 }
 
 void ArkanoidScene::Render(HDC hdc)
@@ -48,7 +50,7 @@ void ArkanoidScene::Render(HDC hdc)
 	}
 }
 
-void ArkanoidScene::CollidsionCheck()
+void ArkanoidScene::CollisionCheck()
 {
 	for (auto ball : _player->GetBalls())
 	{

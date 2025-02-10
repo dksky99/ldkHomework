@@ -99,8 +99,6 @@ bool Arkanoid_Player::IsCollision(shared_ptr<class Arkanoid_Ball> ball)
 	
 	if (_body->IsCollision(ball->GetCollider()))
 	{
-		isActive = false;
-		ball->isActive = false;
 		return true;
 	}
 
