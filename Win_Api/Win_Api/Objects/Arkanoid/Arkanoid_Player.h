@@ -23,6 +23,7 @@ public:
 	bool IsCollision(shared_ptr<class Arkanoid_Ball> ball);
 	vector<shared_ptr<class Arkanoid_Ball>> GetBalls() { return _balls; }
 
+	void SetBallDeadEvent(function<void(void)> fn);
 
 
 private:

@@ -1,5 +1,6 @@
 #include "framework.h"
 #include "Math/Collider/CircleCollider.h"
+#include "Math/Collider/RectCollider.h"
 #include "Arkanoid_Ball.h"
 
 Arkanoid_Ball::Arkanoid_Ball()
@@ -68,7 +69,69 @@ void Arkanoid_Ball::CheckWall()
 	}
 }
 
+void Arkanoid_Ball::BlockReflection(shared_ptr<class RectCollider> other)
+{
+	Vector temp = _ballDir;
+	Vector center = _circle->GetCenter();
+	if (center.x<other->Left() || center.x>other->Right())
+		temp.x *= -1;
+	if (center.y > other->Bottom() || center.y < other->Top())
+		temp.y *= -1;
+
+	temp.Noramlize();
+	_ballDir = temp;
+}
+
+void Arkanoid_Ball::RegularReflection(shared_ptr<RectCollider> other)
+{
+	
+	Vector temp =  other->GetCenter() - _circle->GetCenter();
+
+	Vector center = _circle->GetCenter();
+	if (center.x<other->Left() || center.x>other->Right())
+		temp.x *= -1;
+	else if (center.y > other->Bottom() || center.y < other->Top())
+	{
+
+		_circle->SetGreen();
+		temp.y *= -1;
+		temp.x *= -1;
+	}
+	else
+	{
+		temp = Vector::Down();
+	}
+
+	temp.Noramlize();
+	_ballDir = temp;
+
+}
+
+void Arkanoid_Ball::DiffuseReflection(shared_ptr<RectCollider> other)
+{
+	Vector temp = other->GetCenter() - _circle->GetCenter();
+
+	Vector center = _circle->GetCenter();
+	if (center.x<other->Left() || center.x>other->Right())
+		temp.x *= -1;
+	else if (center.y > other->Bottom() || center.y < other->Top())
+	{
+		_circle->SetRed();
+		temp.y *= -1;
+		temp.x *= -1;
+	}
+	else
+	{
+		temp = Vector::Down();
+	}
+
+
+	temp.Noramlize();
+	_ballDir = temp;
+}
+
 void Arkanoid_Ball::BallDead()
 {
 	isActive = false;
+	ballDead();
 }

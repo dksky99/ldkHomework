@@ -17,12 +17,17 @@ public:
     void SetDir(Vector v) { _ballDir = v.NormalVector(); }
     void BasicMove();
     void CheckWall();
+    void BlockReflection(shared_ptr<class RectCollider> other);
+    void RegularReflection(shared_ptr<class RectCollider> other);
+    void DiffuseReflection(shared_ptr<class RectCollider> other);
+
+    void SetBallDead(function<void(void)> fn) { ballDead = fn; }
     void BallDead();
     shared_ptr<class CircleCollider> GetCollider() { return _circle; }
 
 private:
 
-    float _ballSpeed = 3;
+    float _ballSpeed = 9;
     shared_ptr<class CircleCollider> _circle;
 
     Vector _ballDir = Vector(0, 0);
