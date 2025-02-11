@@ -94,12 +94,12 @@ void Arkanoid_Ball::RegularReflection(shared_ptr<RectCollider> other)
 		temp = _ballDir;
 		temp.x *= -1;
 	}
-	else if (center.y > other->Bottom() || center.y < other->Top())
+	else if ( center.y < other->Top())
 	{
 		//기존 방향의 부호 확인
 		float x = _ballDir.x>0?1:-1;
 		float y = _ballDir.y > 0 ? 1 : -1;
-
+		_circle->SetCenter(center.x, other->Top() - _circle->GetRadius());
 		_circle->SetGreen();
 		//공과 플레이어의 방향
 		temp = other->GetCenter() - _circle->GetCenter();
@@ -130,10 +130,11 @@ void Arkanoid_Ball::DiffuseReflection(shared_ptr<RectCollider> other)
 		temp = _ballDir;
 		temp.x *= -1;
 	}
-	else if (center.y > other->Bottom() || center.y < other->Top())
+	else if (center.y < other->Top())
 	{
 		float x = _ballDir.x > 0 ? 1 : -1;
 		float y = _ballDir.y > 0 ? 1 : -1;
+		_circle->SetCenter(center.x, other->Top() - _circle->GetRadius());
 
 		_circle->SetRed();
 		temp = other->GetCenter() - _circle->GetCenter();
