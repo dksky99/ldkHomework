@@ -1,11 +1,12 @@
 #pragma once
 #include "Objects/Object.h"
 
-class Arkanoid_Player : public Object
+class Arkanoid_Player : public Object,public enable_shared_from_this<Arkanoid_Player>
 {
 public:
 	Arkanoid_Player();
 	~Arkanoid_Player();
+	void Init();
 
 
 	// Object을(를) 통해 상속됨
@@ -25,6 +26,7 @@ public:
 
 	void SetBallDeadEvent(function<void(void)> fn);
 
+	void ItemSkill();
 
 private:
 

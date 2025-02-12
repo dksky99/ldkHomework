@@ -12,15 +12,22 @@ Arkanoid_Player::Arkanoid_Player()
 	_speed = 10;
 
 	_body = make_shared<RectCollider>(WIN_CENTER+Vector(0,200), Vector(200, 30));
-	for (int i = 0;i < _poolCount;i++)
-	{
-		_balls.push_back(make_shared<Arkanoid_Ball>());
-
-	}
+	
 }
 
 Arkanoid_Player::~Arkanoid_Player()
 {
+}
+
+void Arkanoid_Player::Init()
+{
+	for (int i = 0;i < _poolCount;i++)
+	{
+		_balls.push_back(make_shared<Arkanoid_Ball>(shared_from_this()));
+
+	}
+	_balls[0]->isActive = true;
+	_balls[0]->SetPos(GetFirePos());
 }
 
 void Arkanoid_Player::Update()
@@ -74,13 +81,14 @@ void Arkanoid_Player::Fire()
 {
 	if (isActive == false)
 		return;
-	if (_balls[0]->isActive == true)
-		return;
 
 	if (GetKeyState(VK_SPACE) & 0x8000)
 	{
-		auto iter = _balls.begin();
+		auto iter = find_if(_balls.begin(), _balls.end(), [](shared_ptr<Arkanoid_Ball> ball) {return ball->isActive&&!ball->IsFired();});
 			
+		if (iter == _balls.end())
+			return;
+
 		(*iter)->SetPos(GetFirePos());
 		(*iter)->SetDir(Vector::UP());
 		
@@ -117,5 +125,20 @@ bool Arkanoid_Player::IsCollision(shared_ptr<class Arkanoid_Ball> ball)
 
 void Arkanoid_Player::SetBallDeadEvent(function<void(void)> fn)
 {
-	_balls[0]->SetBallDead(fn);
+	for (auto ball : _balls)
+	{
+
+		ball->SetBallDead(fn);
+	}
+}
+
+void Arkanoid_Player::ItemSkill()
+{
+   auto iter=find_if(_balls.begin(), _balls.end(), [](shared_ptr<Arkanoid_Ball> ball) {return(ball->isActive == false);});
+
+   if (iter != _balls.end())
+   {
+	   (*iter)->isActive = true;
+   }
+
 }

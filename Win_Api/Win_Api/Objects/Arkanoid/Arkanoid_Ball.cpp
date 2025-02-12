@@ -1,12 +1,20 @@
 #include "framework.h"
 #include "Math/Collider/CircleCollider.h"
 #include "Math/Collider/RectCollider.h"
+#include "Objects/Arkanoid/Arkanoid_Player.h"
 #include "Arkanoid_Ball.h"
 
 Arkanoid_Ball::Arkanoid_Ball()
 {
 	_circle = make_shared<CircleCollider>(1000, 1000, 10);
+	//isActive = false;
+}
+
+Arkanoid_Ball::Arkanoid_Ball(shared_ptr<class Arkanoid_Player> player):Arkanoid_Ball()
+{
 	isActive = false;
+	_player = player;
+	
 }
 
 Arkanoid_Ball::~Arkanoid_Ball()
@@ -17,8 +25,15 @@ void Arkanoid_Ball::Update()
 {
 	if (!isActive)
 		return;
+	if (IsFired()==false)
+	{
+		FollowMove();
+	}
+	else
+	{
 
-	BasicMove();
+		BasicMove();
+	}
 	_circle->Update();
 
 	//화면 밖으로 나가는 예외처리
@@ -53,6 +68,14 @@ void Arkanoid_Ball::BasicMove()
 	if (!isActive)
 		return;
 	AddVector(_ballDir * _ballSpeed);
+}
+
+void Arkanoid_Ball::FollowMove()
+{
+	if (_player.lock() != nullptr)
+	{
+		SetPos(_player.lock()->GetFirePos());
+	}
 }
 
 void Arkanoid_Ball::CheckWall()
@@ -157,6 +180,8 @@ void Arkanoid_Ball::DiffuseReflection(shared_ptr<RectCollider> other)
 
 void Arkanoid_Ball::BallDead()
 {
-	isActive = false;
+	//isActive = false;
+	_ballDir = Vector(0, 0);
+	
 	ballDead();
 }

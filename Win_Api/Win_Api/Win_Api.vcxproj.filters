@@ -105,6 +105,12 @@
     <ClInclude Include="Math\DisJointSet.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Objects\Arkanoid\Arkanoid_Map.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\Arkanoid\Arkanoid_Item.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Win_Api.cpp">
@@ -183,6 +189,12 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Objects\Maze\Player.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\Arkanoid\Arkanoid_Map.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\Arkanoid\Arkanoid_Item.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

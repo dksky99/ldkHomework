@@ -4,6 +4,7 @@ class Arkanoid_Ball : public Object
 {
 public:
     Arkanoid_Ball();
+    Arkanoid_Ball(shared_ptr<class Arkanoid_Player> _player);
     ~Arkanoid_Ball();
     // Object을(를) 통해 상속됨
     virtual void Update() override;
@@ -15,7 +16,9 @@ public:
     void SetPos(Vector pos);
 
     void SetDir(Vector v) { _ballDir = v.NormalVector(); }
+    Vector GetDir() { return _ballDir; }
     void BasicMove();
+    void FollowMove();
     void CheckWall();
     void BlockReflection(shared_ptr<class RectCollider> other);
     void RegularReflection(shared_ptr<class RectCollider> other);
@@ -25,8 +28,10 @@ public:
     void BallDead();
     shared_ptr<class CircleCollider> GetCollider() { return _circle; }
 
-private:
+    bool IsFired() { return isActive==true&&_ballDir.Length() != 0.0f; }
 
+private:
+    weak_ptr<class Arkanoid_Player> _player;
     float _ballSpeed = 9;
     shared_ptr<class CircleCollider> _circle;
 

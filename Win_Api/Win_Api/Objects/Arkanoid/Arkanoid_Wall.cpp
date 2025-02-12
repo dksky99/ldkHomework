@@ -2,6 +2,7 @@
 #include "Math/Collider/RectCollider.h"
 #include "Math/Collider/CircleCollider.h"
 #include "Objects/Arkanoid/Arkanoid_Ball.h"
+#include "Objects/Arkanoid/Arkanoid_Item.h"
 #include "Arkanoid_Wall.h"
 
 Arkanoid_Wall::Arkanoid_Wall()
@@ -34,13 +35,17 @@ void Arkanoid_Wall::SetPos(Vector pos)
 
 void Arkanoid_Wall::Update()
 {
+
 	if (isActive == false)
 		return;
 	_collider->Update();
+	
 }
 
 void Arkanoid_Wall::Render(HDC hdc)
 {
+
+
 	if (isActive == false)
 		return;
 	_collider->Render(hdc);
@@ -53,6 +58,8 @@ bool Arkanoid_Wall::IsCollision(shared_ptr<class Arkanoid_Ball> ball)
 		return false;
 	if (_collider->IsCollision(ball->GetCollider()))
 	{
+		ItemLiberation();
+
 		isActive = false;
 
 		ball->BlockReflection(_collider);
@@ -61,4 +68,18 @@ bool Arkanoid_Wall::IsCollision(shared_ptr<class Arkanoid_Ball> ball)
 		return true;
 	}
 	return false;
+}
+
+void Arkanoid_Wall::ItemLiberation()
+{
+	if (_item.lock() == nullptr)
+		return;
+	_item.lock()->ItemLiberation();
+}
+
+void Arkanoid_Wall::SetItem(shared_ptr<class Arkanoid_Item> item)
+{
+	_item = item;
+	_item.lock()->SetPos(_collider->GetCenter());
+
 }
