@@ -4,6 +4,7 @@
 #include "Objects/Arkanoid/Arkanoid_Ball.h"
 #include "Objects/Arkanoid/Arkanoid_Wall.h"
 #include "Objects/Arkanoid/Arkanoid_Map.h"
+#include "UI/HPBar.h"
 #include "ArkanoidScene.h"
 
 ArkanoidScene::ArkanoidScene()
@@ -20,9 +21,17 @@ ArkanoidScene::ArkanoidScene()
 	_hpUI.push_back(make_shared<CircleCollider>(Vector(20, 20), 15));
 	_hpUI.push_back(make_shared<CircleCollider>(Vector(60, 20), 15));
 	_hpUI.push_back(make_shared<CircleCollider>(Vector(100, 20), 15));
+	_hpUI.push_back(make_shared<CircleCollider>(Vector(140, 20), 15));
+	_hpUI.push_back(make_shared<CircleCollider>(Vector(180, 20), 15));
 	_hpUI[0]->SetGreen();
 	_hpUI[1]->SetGreen();
 	_hpUI[2]->SetGreen();
+	_hpUI[3]->SetGreen();
+	_hpUI[4]->SetGreen();
+
+	_ui_hpBar = make_shared<HPBar>(WIN_CENTER + Vector(0, 300), Vector(600, 50));
+
+	_ui_hpBar->SetValue(1);
 
 }
 
@@ -38,7 +47,10 @@ void ArkanoidScene::Update()
 		wall->Update();
 	}
 	_map->Update();
+
+
 	CollisionCheck();
+	_ui_hpBar->Update();
 }
 
 void ArkanoidScene::Render(HDC hdc)
@@ -50,6 +62,7 @@ void ArkanoidScene::Render(HDC hdc)
 	}
 
 	_map->Render(hdc);
+	_ui_hpBar->Render(hdc);
 }
 
 void ArkanoidScene::CollisionCheck()
@@ -82,5 +95,6 @@ void ArkanoidScene::BallDead()
 
 	_lifeCount--;
 	_hpUI[_lifeCount]->SetRed();
+	_ui_hpBar->SetValue((float)_lifeCount / (float)_maxHp);
 	_player->GetBalls()[0]->isActive = true;
 }

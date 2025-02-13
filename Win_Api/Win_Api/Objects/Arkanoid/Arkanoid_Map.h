@@ -25,5 +25,8 @@ private:
 	Vector _wallSize = Vector(80, 30);
 	Vector _wallGap = Vector(2, 2);
 
+
+
+
 };
 

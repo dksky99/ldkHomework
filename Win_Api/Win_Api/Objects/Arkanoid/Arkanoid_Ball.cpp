@@ -182,6 +182,7 @@ void Arkanoid_Ball::BallDead()
 {
 	//isActive = false;
 	_ballDir = Vector(0, 0);
+	isActive = false;
 	
 	ballDead();
 }

@@ -9,7 +9,7 @@ Arkanoid_Wall::Arkanoid_Wall()
 {
 	isActive = true;
 
-	_collider = make_shared<RectCollider>(WIN_CENTER, Vector(100,40));
+	_collider = make_shared<RectCollider>(WIN_CENTER, Vector(80, 30));
 
 	
 
@@ -19,7 +19,7 @@ Arkanoid_Wall::Arkanoid_Wall(Vector pos)
 {
 	isActive = true;
 
-	_collider = make_shared<RectCollider>(pos, Vector(100, 40));
+	_collider = make_shared<RectCollider>(pos, Vector(80, 30));
 
 
 }

@@ -92,7 +92,6 @@ void Arkanoid_Player::Fire()
 		(*iter)->SetPos(GetFirePos());
 		(*iter)->SetDir(Vector::UP());
 		
-		(*iter)->isActive = true;
 
 		
 
