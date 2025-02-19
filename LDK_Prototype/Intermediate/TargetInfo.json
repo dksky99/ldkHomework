@@ -1,0 +1,14 @@
+{
+	"Targets": [
+		{
+			"Name": "LDK_Prototype",
+			"Path": "..\\Source\\LDK_Prototype.Target.cs",
+			"Type": "Game"
+		},
+		{
+			"Name": "LDK_PrototypeEditor",
+			"Path": "..\\Source\\LDK_PrototypeEditor.Target.cs",
+			"Type": "Editor"
+		}
+	]
+}
