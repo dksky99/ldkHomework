@@ -45,5 +45,17 @@
     <ClInclude Include="..\..\Source\LDK_Prototype\MyActor.h">
       <Filter>Source\LDK_Prototype</Filter>
     </ClInclude>
+    <ClCompile Include="..\..\Source\LDK_Prototype\MyTutoActor.cpp">
+      <Filter>Source\LDK_Prototype</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\LDK_Prototype\MyTutoActor.h">
+      <Filter>Source\LDK_Prototype</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\LDK_Prototype\MyTutoPawn.cpp">
+      <Filter>Source\LDK_Prototype</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\LDK_Prototype\MyTutoPawn.h">
+      <Filter>Source\LDK_Prototype</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
