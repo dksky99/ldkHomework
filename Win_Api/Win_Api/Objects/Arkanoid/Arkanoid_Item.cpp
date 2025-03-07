@@ -55,7 +55,7 @@ void Arkanoid_Item::SetPos(Vector dir)
 bool Arkanoid_Item::IsCollision(shared_ptr<class Arkanoid_Player> player)
 {
 	if (isActive == false)
-		return;
+		return false;
 	bool result=player->GetCollider()->IsCollision(_body);
 	if (result)
 	{

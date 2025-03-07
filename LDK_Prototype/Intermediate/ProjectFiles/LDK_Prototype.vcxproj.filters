@@ -45,6 +45,84 @@
     <ClInclude Include="..\..\Source\LDK_Prototype\MyActor.h">
       <Filter>Source\LDK_Prototype</Filter>
     </ClInclude>
+    <ClCompile Include="..\..\Source\LDK_Prototype\MyAnimInstance.cpp">
+      <Filter>Source\LDK_Prototype</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\LDK_Prototype\MyAnimInstance.h">
+      <Filter>Source\LDK_Prototype</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\LDK_Prototype\MyButton.cpp">
+      <Filter>Source\LDK_Prototype</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\LDK_Prototype\MyButton.h">
+      <Filter>Source\LDK_Prototype</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\LDK_Prototype\MyCharacter.cpp">
+      <Filter>Source\LDK_Prototype</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\LDK_Prototype\MyCharacter.h">
+      <Filter>Source\LDK_Prototype</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\LDK_Prototype\MyEnemy.cpp">
+      <Filter>Source\LDK_Prototype</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\LDK_Prototype\MyEnemy.h">
+      <Filter>Source\LDK_Prototype</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\LDK_Prototype\MyGameInstance.cpp">
+      <Filter>Source\LDK_Prototype</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\LDK_Prototype\MyGameInstance.h">
+      <Filter>Source\LDK_Prototype</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\LDK_Prototype\MyGameModeBase.cpp">
+      <Filter>Source\LDK_Prototype</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\LDK_Prototype\MyGameModeBase.h">
+      <Filter>Source\LDK_Prototype</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\LDK_Prototype\MyHpBar.cpp">
+      <Filter>Source\LDK_Prototype</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\LDK_Prototype\MyHpBar.h">
+      <Filter>Source\LDK_Prototype</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\LDK_Prototype\MyInvenComponent.cpp">
+      <Filter>Source\LDK_Prototype</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\LDK_Prototype\MyInvenComponent.h">
+      <Filter>Source\LDK_Prototype</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\LDK_Prototype\MyInvenUI.cpp">
+      <Filter>Source\LDK_Prototype</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\LDK_Prototype\MyInvenUI.h">
+      <Filter>Source\LDK_Prototype</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\LDK_Prototype\MyItem.cpp">
+      <Filter>Source\LDK_Prototype</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\LDK_Prototype\MyItem.h">
+      <Filter>Source\LDK_Prototype</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\LDK_Prototype\MyPlayer.cpp">
+      <Filter>Source\LDK_Prototype</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\LDK_Prototype\MyPlayer.h">
+      <Filter>Source\LDK_Prototype</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\LDK_Prototype\MyPlayerController.cpp">
+      <Filter>Source\LDK_Prototype</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\LDK_Prototype\MyPlayerController.h">
+      <Filter>Source\LDK_Prototype</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\LDK_Prototype\MyStatComponent.cpp">
+      <Filter>Source\LDK_Prototype</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\LDK_Prototype\MyStatComponent.h">
+      <Filter>Source\LDK_Prototype</Filter>
+    </ClInclude>
     <ClCompile Include="..\..\Source\LDK_Prototype\MyTutoActor.cpp">
       <Filter>Source\LDK_Prototype</Filter>
     </ClCompile>

@@ -26,8 +26,13 @@ public:
 
 
 private:
-	
-	UMeshComponent* _mesh;
+
+
+
+	UPROPERTY()
+	UStaticMeshComponent* _mesh;
+
+	float _rotSpeed = 100.0f;
 
 
 

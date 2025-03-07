@@ -14,7 +14,11 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 #endif
 #define LDK_PROTOTYPE_MyTutoPawn_generated_h
 
-#define FID_Git_ldkHomework_ldkHomework_LDK_Prototype_Source_LDK_Prototype_MyTutoPawn_h_14_INCLASS_NO_PURE_DECLS \
+#define FID_Git_ldkHomework_ldkHomework_LDK_Prototype_Source_LDK_Prototype_MyTutoPawn_h_20_RPC_WRAPPERS_NO_PURE_DECLS \
+	DECLARE_FUNCTION(execTemp);
+
+
+#define FID_Git_ldkHomework_ldkHomework_LDK_Prototype_Source_LDK_Prototype_MyTutoPawn_h_20_INCLASS_NO_PURE_DECLS \
 private: \
 	static void StaticRegisterNativesAMyTutoPawn(); \
 	friend struct Z_Construct_UClass_AMyTutoPawn_Statics; \
@@ -23,7 +27,7 @@ public: \
 	DECLARE_SERIALIZER(AMyTutoPawn)
 
 
-#define FID_Git_ldkHomework_ldkHomework_LDK_Prototype_Source_LDK_Prototype_MyTutoPawn_h_14_ENHANCED_CONSTRUCTORS \
+#define FID_Git_ldkHomework_ldkHomework_LDK_Prototype_Source_LDK_Prototype_MyTutoPawn_h_20_ENHANCED_CONSTRUCTORS \
 private: \
 	/** Private move- and copy-constructors, should never be used */ \
 	AMyTutoPawn(AMyTutoPawn&&); \
@@ -35,12 +39,13 @@ public: \
 	NO_API virtual ~AMyTutoPawn();
 
 
-#define FID_Git_ldkHomework_ldkHomework_LDK_Prototype_Source_LDK_Prototype_MyTutoPawn_h_11_PROLOG
-#define FID_Git_ldkHomework_ldkHomework_LDK_Prototype_Source_LDK_Prototype_MyTutoPawn_h_14_GENERATED_BODY \
+#define FID_Git_ldkHomework_ldkHomework_LDK_Prototype_Source_LDK_Prototype_MyTutoPawn_h_17_PROLOG
+#define FID_Git_ldkHomework_ldkHomework_LDK_Prototype_Source_LDK_Prototype_MyTutoPawn_h_20_GENERATED_BODY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	FID_Git_ldkHomework_ldkHomework_LDK_Prototype_Source_LDK_Prototype_MyTutoPawn_h_14_INCLASS_NO_PURE_DECLS \
-	FID_Git_ldkHomework_ldkHomework_LDK_Prototype_Source_LDK_Prototype_MyTutoPawn_h_14_ENHANCED_CONSTRUCTORS \
+	FID_Git_ldkHomework_ldkHomework_LDK_Prototype_Source_LDK_Prototype_MyTutoPawn_h_20_RPC_WRAPPERS_NO_PURE_DECLS \
+	FID_Git_ldkHomework_ldkHomework_LDK_Prototype_Source_LDK_Prototype_MyTutoPawn_h_20_INCLASS_NO_PURE_DECLS \
+	FID_Git_ldkHomework_ldkHomework_LDK_Prototype_Source_LDK_Prototype_MyTutoPawn_h_20_ENHANCED_CONSTRUCTORS \
 private: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 

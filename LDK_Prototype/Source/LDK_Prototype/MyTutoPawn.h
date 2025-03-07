@@ -6,7 +6,13 @@
 #include "GameFramework/Pawn.h"
 #include "MyTutoPawn.generated.h"
 
-//1. 언리얼의 이벤트 함수 실행 순서
+
+
+
+
+class UInputAction;
+
+struct FInputActionValue;
 
 UCLASS()
 class LDK_PROTOTYPE_API AMyTutoPawn : public APawn
@@ -29,17 +35,32 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	void Revolution_Rotation(float DeltaTime);
 
+	UFUNCTION(BlueprintCallable)
+	void Temp();
+
+	void UpDown(float value);
+	void RightLeft(float value);
+	
+
+	void Move(const FInputActionValue& value);
 
 private:
 
 	UPROPERTY()
 	USceneComponent* _locationMarker;
-	UPROPERTY()
+	UPROPERTY(VisibleAnywhere,Category="Mesh")
 	UStaticMeshComponent* _mesh;
 
+	UPROPERTY(EditAnywhere,Category="Speed")
 	float _moveSpeed = 100;
+	UPROPERTY(EditAnywhere,Category="Speed")
 	float _rotSpeed = 10;
+
+	UPROPERTY(EditAnywhere,BlueprintReadOnly,Category="Input",meta=(AllowPrivateAccess="true"))
+	UInputAction* _moveAction;
+
 
 
 };
